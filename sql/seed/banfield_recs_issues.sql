@@ -1,20 +1,21 @@
 -- Seed: Banfield recommendations + issues
 -- Run after banfield_project.sql.
--- Based on the Mars Vet Health master plan (11 fixes + 3 Wave-1 issues).
+-- fix_steps is jsonb → use to_jsonb(array[...])
+-- resolves_issue_ids is uuid[] → pass uuid vars directly
 
 do $$
 declare
   v_project_id uuid := 'a0000000-0000-0000-0000-000000000001';
-  v_issue_csr  uuid;
-  v_issue_404  uuid;
-  v_issue_bot  uuid;
+  v_issue_csr  uuid := 'b0000000-0000-0000-0000-000000000001';
+  v_issue_404  uuid := 'b0000000-0000-0000-0000-000000000002';
+  v_issue_bot  uuid := 'b0000000-0000-0000-0000-000000000003';
 begin
 
   -- ─── Issues ────────────────────────────────────────────────────────────────
 
   insert into issues (id, project_id, category, severity, title, user_sees, ai_sees, pages, source, status)
   values (
-    'b0000000-0000-0000-0000-000000000001',
+    v_issue_csr,
     v_project_id,
     'seo_technical',
     'high',
@@ -26,7 +27,7 @@ begin
     'open'
   ),
   (
-    'b0000000-0000-0000-0000-000000000002',
+    v_issue_404,
     v_project_id,
     'seo_technical',
     'high',
@@ -42,7 +43,7 @@ begin
     'open'
   ),
   (
-    'b0000000-0000-0000-0000-000000000003',
+    v_issue_bot,
     v_project_id,
     'seo_technical',
     'medium',
@@ -54,10 +55,6 @@ begin
     'open'
   )
   on conflict (id) do nothing;
-
-  select id into v_issue_csr from issues where id = 'b0000000-0000-0000-0000-000000000001';
-  select id into v_issue_404 from issues where id = 'b0000000-0000-0000-0000-000000000002';
-  select id into v_issue_bot from issues where id = 'b0000000-0000-0000-0000-000000000003';
 
   -- ─── Wave 1 — Technical Foundation ─────────────────────────────────────────
 
@@ -72,13 +69,13 @@ begin
     'https://jobs.banfield.com/',
     'SSR ensures Googlebot and AI crawlers receive fully-rendered HTML, unlocking indexation for all job listings.',
     92, 'L', 'open',
-    array[
+    to_jsonb(array[
       'Audit the current React/JS framework in use (likely React SPA via SmartSearch or Phenom).',
       'Enable Next.js SSR or request the ATS vendor to provide a server-rendered HTML feed.',
       'Validate with Google Rich Results Test that job schema is present in the HTML response.',
       'Re-submit sitemap after deployment and monitor coverage report in GSC.'
-    ],
-    array[v_issue_csr::text]
+    ]),
+    array[v_issue_csr]
   ),
   (
     'c0000000-0000-0000-0000-000000000002',
@@ -87,13 +84,13 @@ begin
     'https://jobs.banfield.com/job/',
     'Proper status codes free crawl budget and send freshness signals — can recover 15–20% of lost organic visits.',
     78, 'M', 'open',
-    array[
+    to_jsonb(array[
       'Add a scheduled job that checks ATS for expired requisitions daily.',
       'Configure the web server or edge function to return 410 Gone for known-expired URLs.',
       'Add a canonical redirect from the expired URL to the relevant role hub page.',
       'Update the XML sitemap to exclude expired URLs within 24 hours of expiry.'
-    ],
-    array[v_issue_404::text]
+    ]),
+    array[v_issue_404]
   ),
   (
     'c0000000-0000-0000-0000-000000000003',
@@ -102,12 +99,12 @@ begin
     'https://jobs.banfield.com/robots.txt',
     'Unblocking GPTBot, ClaudeBot, and PerplexityBot allows Banfield to appear in AI-generated job answers.',
     70, 'XS', 'open',
-    array[
+    to_jsonb(array[
       'Edit robots.txt to remove or comment out the GPTBot, ClaudeBot, and PerplexityBot Disallow rules.',
       'Add explicit Allow: / for each AI crawler agent.',
       'Verify the change is live by fetching robots.txt from a browser and confirming no Disallow applies.'
-    ],
-    array[v_issue_bot::text]
+    ]),
+    array[v_issue_bot]
   ),
   (
     'c0000000-0000-0000-0000-000000000004',
@@ -116,12 +113,12 @@ begin
     'https://jobs.banfield.com/',
     'LCP above 4s on mobile costs ranking positions — fixing images and render-blocking JS can add 5–8% traffic.',
     65, 'M', 'open',
-    array[
+    to_jsonb(array[
       'Run PageSpeed Insights on the homepage and top 5 job pages.',
       'Compress and lazy-load hero images; serve WebP format.',
       'Defer non-critical JavaScript bundles.',
       'Enable Vercel Edge Caching or a CDN in front of the origin.'
-    ],
+    ]),
     null
   ),
 
@@ -134,12 +131,12 @@ begin
     null,
     'Dedicated hub pages targeting "veterinarian jobs" and "vet tech jobs" can capture 30k+ monthly unbranded searches.',
     88, 'L', 'open',
-    array[
+    to_jsonb(array[
       'Create /careers/veterinarian with H1 "Veterinarian Jobs at Banfield", schema markup, and a filtered job list.',
       'Create /careers/veterinary-technician with equivalent copy and filtered list.',
       'Add internal links from the homepage hero and from relevant job listings.',
       'Submit the new URLs to GSC for indexing and monitor impressions weekly.'
-    ],
+    ]),
     null
   ),
   (
@@ -149,12 +146,12 @@ begin
     null,
     'Location pages rank for "vet jobs [city]" queries — top 10 metros account for ~40% of vet hiring volume.',
     82, 'L', 'open',
-    array[
+    to_jsonb(array[
       'Identify top 10 hiring metros from GSC location data and ATS requisition volume.',
       'Create /careers/[city]-[state] pages with localized copy, schema, and job list.',
       'Build a Locations index page linking to all city hubs.',
       'Add schema markup (JobPosting + BreadcrumbList) to each hub page.'
-    ],
+    ]),
     null
   ),
   (
@@ -164,12 +161,12 @@ begin
     null,
     'Salary and "what does a vet tech do" queries have high click intent — content pages can drive 2–5k monthly visits.',
     74, 'M', 'open',
-    array[
+    to_jsonb(array[
       'Write a "Veterinary Technician Salary at Banfield" page using ATS compensation data.',
       'Write a "Day in the Life of a Banfield Veterinarian" narrative page.',
       'Publish both as blog/editorial pages, link from the relevant role hub pages.',
       'Add FAQ schema to address the top 5 questions from Google''s "People Also Ask" for each role.'
-    ],
+    ]),
     null
   ),
   (
@@ -179,12 +176,12 @@ begin
     null,
     'FAQ schema on hub pages increases likelihood of appearing in AI Overviews and featured snippets.',
     61, 'S', 'open',
-    array[
+    to_jsonb(array[
       'Identify top 10 FAQ questions per role from "People Also Ask" in SERPs.',
       'Add FAQ schema (JSON-LD) to the Veterinarian and Vet Tech hub pages.',
       'Validate schema with Google''s Rich Results Test.',
       'Monitor GSC for FAQ-rich-result impressions after deployment.'
-    ],
+    ]),
     null
   ),
 
@@ -197,12 +194,12 @@ begin
     'https://www.glassdoor.com/Overview/Working-at-Banfield-Pet-Hospital',
     'A keyword-rich Glassdoor profile appears in AI citations for employer reputation queries.',
     58, 'S', 'open',
-    array[
+    to_jsonb(array[
       'Update "About the Company" section with role-specific keyword phrases.',
       'Add veterinary benefits and career growth language to the Overview.',
       'Respond to the top 10 recent reviews to improve engagement signals.',
       'Add a direct link from jobs.banfield.com/about to the Glassdoor profile.'
-    ],
+    ]),
     null
   ),
   (
@@ -212,12 +209,12 @@ begin
     null,
     'Wikipedia is cited frequently by LLMs — a structured employer section improves AI brand visibility.',
     45, 'M', 'open',
-    array[
+    to_jsonb(array[
       'Review the existing Banfield Wikipedia article for careers/employment coverage.',
       'Add or expand the "Employment" section with factual data (employee count, roles, benefits).',
       'Ensure all claims are cited with publicly available sources.',
       'Monitor AI citation tracking in Rankscale for Wikipedia as a source.'
-    ],
+    ]),
     null
   ),
   (
@@ -227,12 +224,12 @@ begin
     'https://www.linkedin.com/company/banfield-pet-hospital',
     'LinkedIn authority boosts off-page signals and is a top citation source for AI employer queries.',
     42, 'S', 'open',
-    array[
+    to_jsonb(array[
       'Ensure LinkedIn company page has complete "Life" and "Jobs" tabs populated.',
       'Post 2–4 employee story articles per month targeting veterinary career queries.',
       'Cross-link LinkedIn "Life" articles to the Day-in-the-Life pages on jobs.banfield.com.',
       'Encourage team members to list Banfield and link to the company page.'
-    ],
+    ]),
     null
   )
   on conflict (id) do nothing;
