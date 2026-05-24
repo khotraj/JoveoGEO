@@ -2,16 +2,19 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/db/client";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
+  const [email, setEmail]       = useState("raj.khot@joveo.com");
+  const [password, setPassword] = useState("");
+  const [mode, setMode]         = useState<"magic" | "password">("password");
+  const [status, setStatus]     = useState<"idle" | "loading" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
-  const searchParams = useSearchParams();
-  const next = searchParams.get("next") ?? "/";
-  const domainError = searchParams.get("error") === "domain";
+  const searchParams            = useSearchParams();
+  const router                  = useRouter();
+  const next                    = searchParams.get("next") ?? "/";
+  const domainError             = searchParams.get("error") === "domain";
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -21,10 +24,26 @@ function LoginForm() {
       return;
     }
     setStatus("loading");
+    setErrorMsg("");
     const supabase = createClient();
+
+    if (mode === "password") {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        setErrorMsg(error.message);
+        setStatus("error");
+      } else {
+        router.push(next);
+        router.refresh();
+      }
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}` },
+      options: {
+        emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}`,
+      },
     });
     if (error) {
       setErrorMsg(error.message);
@@ -40,7 +59,6 @@ function LoginForm() {
         className="w-full max-w-sm rounded-[var(--r-xl)] p-8"
         style={{ background: "var(--surface)", boxShadow: "var(--sh-2)" }}
       >
-        {/* Brand mark */}
         <div className="flex items-center gap-3 mb-8">
           <div
             className="w-9 h-9 rounded-[var(--r-md)] flex items-center justify-center text-white text-sm font-black"
@@ -60,6 +78,13 @@ function LoginForm() {
             <p className="text-sm" style={{ color: "var(--ink-3)" }}>
               We sent a magic link to <strong>{email}</strong>. Click it to sign in.
             </p>
+            <button
+              className="mt-4 text-xs underline"
+              style={{ color: "var(--indigo)" }}
+              onClick={() => setStatus("idle")}
+            >
+              Back to sign in
+            </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -84,12 +109,20 @@ function LoginForm() {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full text-sm px-3 py-2 rounded-[var(--r-md)] outline-none focus:ring-2"
-              style={{
-                background: "var(--bg-2)",
-                border: "1px solid var(--line)",
-                color: "var(--ink)",
-              }}
+              style={{ background: "var(--bg-2)", border: "1px solid var(--line)", color: "var(--ink)" }}
             />
+
+            {mode === "password" && (
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full text-sm px-3 py-2 rounded-[var(--r-md)] outline-none focus:ring-2"
+                style={{ background: "var(--bg-2)", border: "1px solid var(--line)", color: "var(--ink)" }}
+              />
+            )}
 
             <button
               type="submit"
@@ -100,7 +133,16 @@ function LoginForm() {
                 opacity: status === "loading" ? 0.7 : 1,
               }}
             >
-              {status === "loading" ? "Sending…" : "Send magic link"}
+              {status === "loading" ? "Signing in…" : mode === "password" ? "Sign in" : "Send magic link"}
+            </button>
+
+            <button
+              type="button"
+              className="w-full text-xs"
+              style={{ color: "var(--ink-4)" }}
+              onClick={() => { setMode(mode === "password" ? "magic" : "password"); setStatus("idle"); setErrorMsg(""); }}
+            >
+              {mode === "password" ? "Use magic link instead" : "Use password instead"}
             </button>
           </form>
         )}
