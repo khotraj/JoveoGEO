@@ -195,5 +195,20 @@ Both used on the same repo. `CLAUDE.md` is the source of truth for both. Cursor 
 
 <!-- Append new entries below this line as decisions are made. -->
 
+### 2026-05-24 — SQL migration v2: deferred policies + app-side token encryption
+The original migration had a critical forward-reference bug: `tenants` RLS policy referenced `profiles` before `profiles` was created. Fixed by strict section ordering: all CREATE TABLE → all ENABLE RLS → all CREATE POLICY → functions → indexes. Additionally: (a) OAuth tokens switched from `pgsodium bytea` to app-side AES-256-GCM with `text` columns and `TOKEN_ENCRYPTION_KEY` env var — simpler, auditable, no Supabase extension dependency; (b) `ga4_sessions_daily` unique constraint uses `NULLS NOT DISTINCT` for correct NULL handling on `campaign` column; (c) `updated_at` added with auto-trigger to `projects`, `connections`, `profiles`, `oauth_tokens`; (d) `cost_usd <= 5` enforced as a DB CHECK constraint; (e) `competitor_id` added to `ahrefs_keywords` for keyword gap analysis. Decided by architectural review.
+
+### 2026-05-24 — Vercel Free (Hobby) plan: 60s cron execution limit
+Vercel Hobby plan limits serverless function execution to 60 seconds. Each `/api/discover/tick` cron call must complete its current pipeline step within ~50s and exit cleanly. The Discovery pipeline is designed as a state machine in `discovery_runs.status` — each tick picks up where the previous one left off. Steps that might exceed 60s (Playwright scraping, Ahrefs bulk fetch) must checkpoint mid-step. If Vercel Pro is added later, this constraint relaxes to 10 minutes.
+
+### 2026-05-24 — Branch strategy: main / staging / changes
+Three persistent branches: `main` (production, Vercel auto-deploys), `staging` (integration, Vercel preview), `changes` (active development, PRs target staging). Claude Code works on `changes` branch only. Merges: changes → staging (after slice tests pass) → main (after staging smoke test passes).
+
+### 2026-05-24 — Gemini models for free tier
+Decided: FAST=`gemini-2.0-flash`, DEEP=`gemini-1.5-pro` (stable, no rate-limit issues on free tier), CHEAP=`gemini-2.0-flash-lite`. When billing is enabled, upgrade DEEP to `gemini-2.5-pro` via one env var change (`LLM_MODEL_DEEP`). Model selection is at call time (not import time) to support runtime env overrides.
+
+### 2026-05-24 — GSC property type for Banfield
+URL-prefix property: `https://jobs.banfield.com/`. The OAuth callback will detect this from the GSC API `siteUrl` field format. Domain properties (`sc-domain:xxx`) use a different API dimension set — the sync code handles both.
+
 
 @docs/CLAUDE.md
