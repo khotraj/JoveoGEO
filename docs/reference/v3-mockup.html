@@ -1,0 +1,1091 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Givaudan · SEO & GEO Command Center · Joveo Organic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ==========================================================
+   GIVAUDAN · SEO & GEO COMMAND CENTER · v3
+   Marriage of Cockpit v2 aesthetic + Command Center depth
+   Master-tab "game menu" · abstraction cards · deep drill-downs
+   ========================================================== */
+:root {
+  --bg:#FAFAFB; --bg-2:#F4F4F7; --surface:#FFFFFF; --surface-2:#F9FAFC;
+  --line:#E5E7EB; --line-2:#EEF0F3; --line-soft:#F3F4F6;
+  --ink:#0A0A0F; --ink-2:#1F2330; --ink-3:#4B5263; --ink-4:#6B7280; --ink-5:#9CA3AF; --ink-6:#D1D5DB;
+  --indigo:#5B5BD6; --indigo-2:#4338CA; --indigo-soft:#818CF8; --indigo-tint:#EEF2FF;
+  --amber:#D97706; --amber-tint:#FEF3C7; --green:#16A34A; --green-tint:#DCFCE7;
+  --red:#DC2626; --red-tint:#FEE2E2; --purple:#7C3AED; --purple-tint:#F3E8FF; --cyan:#0891B2;
+  --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:24px; --r-2xl:28px;
+  --sh-1:0 1px 2px rgba(15,23,42,.04), 0 0 0 1px rgba(15,23,42,.04);
+  --sh-2:0 4px 14px rgba(15,23,42,.05), 0 0 0 1px rgba(15,23,42,.04);
+  --sh-3:0 18px 48px -12px rgba(15,23,42,.12), 0 0 0 1px rgba(15,23,42,.04);
+  --sh-glow:0 0 0 4px rgba(91,91,214,.12);
+  --spring:cubic-bezier(.34,1.56,.64,1); --ease:cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after { box-sizing:border-box; }
+html,body { margin:0; }
+body {
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  font-feature-settings:"cv02","cv03","cv04","cv11","ss01";
+  font-size:14px; line-height:1.5; letter-spacing:-.005em;
+  color:var(--ink); background:var(--bg); -webkit-font-smoothing:antialiased;
+}
+.mono { font-family:'JetBrains Mono',ui-monospace,monospace; font-feature-settings:"zero"; }
+a { color:inherit; text-decoration:none; }
+svg.lc { width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round; }
+svg.lc-sm { width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round; }
+svg.lc-lg { width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round; }
+
+/* ===== TOPBAR + MASTER NAV (game menu) ===== */
+.topbar { position:sticky; top:0; z-index:60; background:rgba(255,255,255,.85); backdrop-filter:saturate(180%) blur(14px); -webkit-backdrop-filter:saturate(180%) blur(14px); border-bottom:1px solid var(--line-2); }
+.topbar-inner { max-width:1480px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:11px 32px; }
+.brand { display:flex; align-items:center; gap:11px; }
+.brand-mark { width:30px;height:30px;border-radius:9px; background:linear-gradient(135deg,#5B5BD6,#7C3AED); display:grid;place-items:center; color:#fff;font-weight:800;font-size:13px; box-shadow:0 4px 12px rgba(91,91,214,.32), inset 0 1px 0 rgba(255,255,255,.2); }
+.brand-text { display:flex; flex-direction:column; line-height:1.15; }
+.brand-text strong { font-weight:700; font-size:13.5px; letter-spacing:-.01em; }
+.brand-text small { font-size:10.5px; color:var(--ink-4); font-weight:500; letter-spacing:.04em; text-transform:uppercase; margin-top:1px; }
+.site-pill { display:inline-flex; align-items:center; gap:7px; padding:5px 10px 5px 8px; background:var(--indigo-tint); border:1px solid #DBE0FF; color:var(--indigo-2); border-radius:999px; font-size:11.5px; font-weight:600; }
+.site-pill .live { width:6px;height:6px;border-radius:50%; background:var(--green); box-shadow:0 0 0 3px rgba(34,197,94,.18); animation:pulse 2.4s var(--ease) infinite; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 3px rgba(34,197,94,.18);} 50%{box-shadow:0 0 0 6px rgba(34,197,94,0);} }
+.tspacer { flex:1; }
+.tcontrols { display:flex; align-items:center; gap:7px; }
+.btn { display:inline-flex; align-items:center; gap:6px; padding:6.5px 11px; background:var(--surface); border:1px solid var(--line); border-radius:9px; font-size:12px; font-weight:500; color:var(--ink-2); cursor:pointer; transition:transform .14s var(--spring), background .15s var(--ease), border-color .15s var(--ease), box-shadow .15s var(--ease); }
+.btn:hover { background:var(--surface-2); border-color:#D1D5DB; }
+.btn:active { transform:scale(.97); }
+.btn.primary { background:var(--ink); color:#fff; border-color:var(--ink); }
+.btn.primary:hover { background:var(--indigo-2); border-color:var(--indigo-2); box-shadow:0 6px 14px rgba(67,56,202,.25); }
+.btn.ghost { background:transparent; border-color:transparent; color:var(--ink-3); }
+.btn.ghost:hover { background:var(--surface-2); color:var(--ink); }
+.btn.link { background:transparent; border:0; color:var(--indigo-2); padding:0; font-weight:600; cursor:pointer; }
+.btn.link:hover { text-decoration:underline; }
+
+/* master nav */
+.mnav-wrap { border-bottom:1px solid var(--line-2); background:rgba(255,255,255,.6); backdrop-filter:blur(8px); position:sticky; top:53px; z-index:55; }
+.mnav { max-width:1480px; margin:0 auto; display:flex; gap:4px; padding:8px 32px; }
+.mtab {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 16px; border-radius:11px;
+  font-size:13px; font-weight:600; color:var(--ink-4);
+  cursor:pointer; position:relative;
+  transition:all .2s var(--spring); border:1px solid transparent;
+}
+.mtab .ic { width:18px; height:18px; display:grid; place-items:center; opacity:.85; }
+.mtab:hover { color:var(--ink); background:var(--surface); }
+.mtab.on { color:var(--ink); background:var(--surface); border-color:var(--line); box-shadow:var(--sh-1); }
+.mtab.on::after { content:''; position:absolute; left:14px; right:14px; bottom:-9px; height:2px; border-radius:2px; background:linear-gradient(90deg,var(--indigo),var(--purple)); }
+.mtab .cnt { font-size:10.5px; font-weight:700; padding:1px 6px; border-radius:999px; background:var(--bg-2); color:var(--ink-4); }
+.mtab.on .cnt { background:var(--indigo-tint); color:var(--indigo-2); }
+.mtab.warn-dot::before { content:''; position:absolute; top:7px; right:9px; width:6px; height:6px; border-radius:50%; background:var(--red); }
+
+/* ===== PAGE ===== */
+.page { max-width:1480px; margin:0 auto; padding:24px 32px 70px; }
+#view { animation:viewIn .35s var(--ease) both; }
+@keyframes viewIn { from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+/* page header (drill-downs) */
+.page-header { margin-bottom:18px; }
+.back-row { display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap; }
+.btn-back { display:inline-flex; align-items:center; gap:6px; padding:6px 11px; background:var(--surface); border:1px solid var(--line); border-radius:9px; font-size:12px; font-weight:600; color:var(--ink-2); cursor:pointer; transition:all .15s var(--spring); }
+.btn-back:hover { background:var(--surface-2); transform:translateX(-2px); }
+.crumbs { font-size:12px; color:var(--ink-4); display:flex; gap:6px; align-items:center; }
+.crumbs a:hover { color:var(--indigo-2); }
+.page-header h2 { margin:0 0 4px; font-size:22px; font-weight:800; letter-spacing:-.025em; }
+.page-lead { margin:0; font-size:13.5px; color:var(--ink-3); max-width:780px; line-height:1.55; }
+
+/* ===== KPI STRIP ===== */
+.kpi-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:22px; }
+.kpi { background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:14px 16px; display:flex; align-items:center; gap:12px; transition:transform .25s var(--spring), box-shadow .25s var(--ease), border-color .15s var(--ease); }
+.kpi:hover { transform:translateY(-2px); box-shadow:var(--sh-2); border-color:#D1D5DB; }
+.kpi-icon { width:38px;height:38px;border-radius:11px; display:grid;place-items:center; flex-shrink:0; }
+.kpi-icon.a{background:var(--indigo-tint);color:var(--indigo-2);} .kpi-icon.b{background:var(--purple-tint);color:var(--purple);} .kpi-icon.c{background:var(--amber-tint);color:var(--amber);} .kpi-icon.d{background:var(--green-tint);color:var(--green);}
+.kpi-body { flex:1; min-width:0; }
+.kpi-lbl { font-size:10.5px; font-weight:600; color:var(--ink-4); letter-spacing:.04em; text-transform:uppercase; }
+.kpi-val { font-size:22px; font-weight:800; letter-spacing:-.025em; line-height:1.1; font-feature-settings:"tnum","ss01"; margin-top:1px; }
+.kpi-val small { font-size:13px; color:var(--ink-3); font-weight:600; margin-left:1px; }
+.kpi-trend { margin-top:3px; font-size:10.5px; font-weight:600; display:inline-flex; align-items:center; gap:4px; }
+.kpi-trend.up{color:var(--green);} .kpi-trend.down{color:var(--red);} .kpi-trend.flat{color:var(--ink-4);}
+
+/* ===== ABSTRACTION CARDS ===== */
+.cards-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:22px; }
+.card { position:relative; background:var(--surface); border:1.5px solid var(--line-2); border-radius:var(--r-2xl); padding:22px 22px 20px; cursor:pointer; overflow:hidden; transition:transform .35s var(--spring), box-shadow .25s var(--ease), border-color .2s var(--ease); }
+.card::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 20% 0%, rgba(91,91,214,.06), transparent 50%); opacity:0; transition:opacity .3s var(--ease); pointer-events:none; }
+.card:hover { transform:translateY(-3px) scale(1.005); box-shadow:var(--sh-3); border-color:#C7CFFF; }
+.card:hover::before { opacity:1; }
+.card:active { transform:translateY(-1px) scale(.995); }
+.card-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.card-tag { display:inline-flex; align-items:center; gap:7px; font-size:10.5px; font-weight:700; color:var(--ink-4); letter-spacing:.08em; text-transform:uppercase; }
+.card-tag .tagicon { width:22px;height:22px;border-radius:7px; display:grid;place-items:center; }
+.card.t-traffic .tagicon{background:var(--indigo-tint);color:var(--indigo);} .card.t-visible .tagicon{background:var(--amber-tint);color:var(--amber);} .card.t-geo .tagicon{background:var(--purple-tint);color:var(--purple);}
+.card-chevron { width:26px;height:26px;border-radius:8px; display:grid;place-items:center; background:var(--surface-2); color:var(--ink-4); border:1px solid var(--line-2); transition:all .25s var(--spring); }
+.card:hover .card-chevron { background:var(--ink); color:#fff; border-color:var(--ink); transform:translateX(2px); }
+.card-head-num { display:flex; align-items:baseline; gap:8px; }
+.card-num { font-size:36px; font-weight:800; letter-spacing:-.035em; line-height:1; font-feature-settings:"tnum","ss01"; }
+.card-num small { font-size:18px; font-weight:700; color:var(--ink-3); margin-left:-2px; }
+.card-delta { font-size:11px; font-weight:700; padding:3px 7px; border-radius:6px; display:inline-flex; align-items:center; gap:3px; }
+.card-delta.up{background:var(--green-tint);color:#166534;} .card-delta.down{background:var(--red-tint);color:#991B1B;} .card-delta.flat{background:var(--surface-2);color:var(--ink-4);border:1px solid var(--line);}
+.card-headline { margin:10px 0 4px; font-size:15.5px; font-weight:700; letter-spacing:-.012em; line-height:1.35; }
+.card-sub { font-size:12.5px; color:var(--ink-3); line-height:1.5; }
+.card-sub b { color:var(--ink); font-weight:600; }
+.card-foot { margin-top:16px; padding-top:14px; border-top:1px dashed var(--line-2); }
+.mini-traffic { display:grid; grid-template-columns:50px 1fr 38px; align-items:center; gap:10px; font-size:11px; }
+.mini-traffic + .mini-traffic { margin-top:6px; }
+.mini-traffic .lbl { color:var(--ink-4); font-weight:600; letter-spacing:.02em; text-transform:uppercase; font-size:10px; }
+.mt-bar { height:6px; background:var(--line-soft); border-radius:999px; overflow:hidden; }
+.mt-bar > div { height:100%; border-radius:999px; }
+.mini-traffic.hum .mt-bar > div { background:linear-gradient(90deg,var(--indigo),var(--indigo-soft)); }
+.mini-traffic.bot .mt-bar > div { background:linear-gradient(90deg,var(--purple),#A78BFA); }
+.mini-traffic .num { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; text-align:right; }
+.mini-rings { display:flex; gap:10px; justify-content:space-between; }
+.mr { display:flex; flex-direction:column; align-items:center; gap:4px; flex:1; }
+.mr .mr-c { position:relative; } .mr svg { width:44px;height:44px;transform:rotate(-90deg); }
+.mr .mr-v { position:absolute; inset:0; display:grid; place-items:center; font-weight:800; font-size:12px; letter-spacing:-.02em; }
+.mr .mr-l { font-size:9.5px; font-weight:700; color:var(--ink-4); text-transform:uppercase; letter-spacing:.05em; }
+.mr .mr-g { font-size:10px; font-weight:800; padding:1px 5px; border-radius:4px; margin-top:2px; }
+.mr-g.g-bp{background:var(--green-tint);color:#166534;} .mr-g.g-b{background:var(--amber-tint);color:#92400E;} .mr-g.g-c{background:var(--red-tint);color:#991B1B;}
+.mini-sov { display:flex; flex-direction:column; gap:6px; }
+.msov { display:grid; grid-template-columns:76px 1fr 30px; align-items:center; gap:8px; font-size:11px; }
+.msov .b-lbl { color:var(--ink-3); font-weight:600; }
+.msov.you .b-lbl { color:var(--indigo); font-weight:700; }
+.msov .b-bar { height:8px; background:var(--line-soft); border-radius:999px; overflow:hidden; }
+.msov .b-bar > div { height:100%; background:linear-gradient(90deg,#6B7280,#9CA3AF); border-radius:999px; }
+.msov.you .b-bar > div { background:linear-gradient(90deg,var(--indigo),var(--purple)); }
+.msov .b-pct { font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:700; text-align:right; }
+.card .reveal { max-height:0; opacity:0; overflow:hidden; transition:max-height .35s var(--ease), opacity .25s var(--ease), margin .25s var(--ease); font-size:12px; color:var(--ink-3); line-height:1.55; }
+.card:hover .reveal { max-height:120px; opacity:1; margin-top:12px; }
+.card .reveal b { color:var(--ink); font-weight:600; }
+
+/* ===== SNAPSHOT STRIP ===== */
+.snapshot { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:22px; }
+.snap-col { background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:18px 20px; }
+.snap-col h4 { margin:0 0 12px; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
+.snap-col.s h4 { color:var(--green); } .snap-col.g h4 { color:var(--amber); } .snap-col.n h4 { color:var(--indigo); }
+.snap-col ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px; }
+.snap-col li { font-size:12.5px; color:var(--ink-2); line-height:1.45; display:flex; gap:9px; align-items:flex-start; }
+.snap-col li .dot { width:6px; height:6px; border-radius:50%; margin-top:6px; flex-shrink:0; }
+.snap-col.s li .dot { background:var(--green); } .snap-col.g li .dot { background:var(--amber); } .snap-col.n li .dot { background:var(--indigo); }
+.snap-col li strong { font-weight:700; }
+.snap-col .btn.link { font-size:12.5px; }
+
+/* ===== STAGE / SECTION CARD ===== */
+.sec { background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-2xl); box-shadow:var(--sh-2); overflow:hidden; }
+.sec + .sec { margin-top:16px; }
+.sec-head { padding:18px 24px; border-bottom:1px solid var(--line-2); display:flex; align-items:center; gap:14px; }
+.sec-head .ic { width:30px;height:30px;border-radius:9px; display:grid;place-items:center; }
+.sec-head .ic.a{background:var(--indigo-tint);color:var(--indigo-2);} .sec-head .ic.b{background:var(--amber-tint);color:var(--amber);} .sec-head .ic.c{background:var(--purple-tint);color:var(--purple);} .sec-head .ic.d{background:var(--green-tint);color:var(--green);}
+.sec-head h3 { margin:0; font-size:16px; font-weight:700; letter-spacing:-.012em; }
+.sec-head .crumb { margin-left:auto; font-size:11.5px; color:var(--ink-4); display:flex; align-items:center; gap:10px; }
+.sec-head .src { font-family:'JetBrains Mono',monospace; background:var(--surface-2); border:1px solid var(--line-2); padding:3px 8px; border-radius:6px; font-size:10.5px; color:var(--ink-3); }
+.sec-body { padding:22px 24px; }
+
+/* ===== TRAFFIC ===== */
+.t-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:18px; }
+.lane { background:var(--surface-2); border:1px solid var(--line-2); border-radius:var(--r-lg); overflow:hidden; }
+.lane-head { padding:12px 14px; display:flex; align-items:center; justify-content:space-between; background:var(--surface); border-bottom:1px solid var(--line-2); }
+.lane-head .lh-l { display:flex; align-items:center; gap:9px; font-weight:700; font-size:13px; }
+.lane-head .lh-l .icn { width:26px;height:26px;border-radius:8px; display:grid;place-items:center; }
+.lane.human .lh-l .icn { background:var(--indigo-tint); color:var(--indigo); }
+.lane.bot .lh-l .icn { background:var(--purple-tint); color:var(--purple); }
+.lane-head .lh-r { font-size:10.5px; color:var(--ink-4); }
+.row { display:grid; grid-template-columns:100px 1fr auto; gap:12px; align-items:center; padding:10px 14px; border-top:1px solid var(--line-2); position:relative; }
+.lane.bot .row { cursor:pointer; }
+.row:hover { background:rgba(91,91,214,.04); }
+.lane.bot .row:hover { background:rgba(124,58,237,.05); }
+.row .rl { font-size:11.5px; color:var(--ink-3); font-weight:500; }
+.row .rb { height:5px; background:var(--line-soft); border-radius:999px; overflow:hidden; }
+.row .rb > div { height:100%; border-radius:999px; background:linear-gradient(90deg,var(--indigo),var(--indigo-soft)); transition:width .6s var(--spring); }
+.lane.bot .row .rb > div { background:linear-gradient(90deg,var(--purple),#A78BFA); }
+.row .rn { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; min-width:70px; text-align:right; }
+.row .rn small { color:var(--ink-4); font-weight:500; font-size:10.5px; margin-left:2px; }
+.row .rev-tip { position:absolute; left:50%; transform:translate(-50%,8px); top:100%; background:var(--ink); color:#fff; padding:9px 12px; border-radius:10px; font-size:11px; line-height:1.5; white-space:nowrap; opacity:0; pointer-events:none; z-index:10; box-shadow:var(--sh-3); transition:opacity .18s var(--ease), transform .25s var(--spring); }
+.row .rev-tip::before { content:''; position:absolute; top:-4px; left:50%; transform:translateX(-50%) rotate(45deg); width:8px; height:8px; background:var(--ink); }
+.lane.bot .row:hover .rev-tip { opacity:1; transform:translate(-50%,0); }
+.lane-split { margin:8px 14px 14px; padding:12px; background:var(--surface); border:1px dashed var(--line); border-radius:10px; }
+.lane-split-h { font-size:10.5px; font-weight:700; color:var(--ink-4); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
+.sb { display:flex; height:12px; border-radius:999px; overflow:hidden; background:var(--line-soft); }
+.sb .sg { display:flex; align-items:center; justify-content:center; font-size:9.5px; font-weight:700; color:#fff; }
+.sb .sg.jr{background:linear-gradient(90deg,var(--indigo),var(--indigo-soft));} .sb .sg.lo{background:linear-gradient(90deg,var(--amber),#F59E0B);} .sb .sg.ev{background:linear-gradient(90deg,var(--green),#22C55E);} .sb .sg.bl{background:linear-gradient(90deg,#6B7280,#9CA3AF);}
+.sleg { display:flex; gap:12px; margin-top:8px; font-size:10.5px; color:var(--ink-4); flex-wrap:wrap; }
+.drill { margin-top:4px; background:linear-gradient(180deg,#FAFBFF,#FFFFFF); border:1px solid #DBE0FF; border-radius:var(--r-lg); padding:16px 18px; }
+.drill-h { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.drill-h h4 { margin:0; font-size:12.5px; font-weight:700; display:flex; align-items:center; gap:7px; }
+.drill-h h4 .pulse { width:6px;height:6px;border-radius:50%; background:var(--purple); box-shadow:0 0 0 4px rgba(124,58,237,.16); }
+.drill-grid { display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:12px; }
+.dcard { background:var(--surface); border:1px solid var(--line-2); border-radius:11px; padding:12px 14px; }
+.dcard h5 { margin:0 0 9px; font-size:10.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-4); }
+.kwc { display:flex; flex-wrap:wrap; gap:5px; }
+.kwx { padding:4px 9px; border-radius:999px; font-weight:600; background:var(--indigo-tint); color:var(--indigo-2); border:1px solid #DBE0FF; transition:transform .2s var(--spring); }
+.kwx:hover { transform:translateY(-1px) scale(1.04); }
+.kwx.s5{font-size:14px; background:linear-gradient(135deg,var(--indigo),var(--purple)); color:#fff; border-color:transparent;} .kwx.s4{font-size:12.5px; background:#C7CFFF; color:#3730A3;} .kwx.s3{font-size:11.5px;} .kwx.s2{font-size:11px;} .kwx.s1{font-size:10.5px; opacity:.85;}
+.ail { display:flex; flex-direction:column; gap:6px; }
+.air { display:flex; align-items:center; gap:9px; padding:7px 9px; border-radius:9px; background:var(--bg-2); border:1px solid var(--line-2); transition:all .15s var(--ease); }
+.air:hover { background:var(--surface); border-color:#DBE0FF; transform:translateX(2px); }
+.alogo { width:24px;height:24px;border-radius:7px; display:grid;place-items:center; font-size:11px;font-weight:700;color:#fff; flex-shrink:0; }
+.alogo.gpt{background:linear-gradient(135deg,#10A37F,#0D8B6C);} .alogo.gem{background:linear-gradient(135deg,#4285F4,#9B72CB);} .alogo.per{background:linear-gradient(135deg,#20B8CD,#1A8FA1);} .alogo.aio{background:linear-gradient(135deg,#4285F4,#34A853);} .alogo.g4j{background:linear-gradient(135deg,#EA4335,#FBBC04);}
+.am { flex:1; min-width:0; } .am-n { font-size:11.5px; font-weight:600; color:var(--ink-2); } .am-s { font-size:10.5px; color:var(--ink-4); }
+.ar { font-size:10.5px; font-weight:700; padding:2px 6px; border-radius:5px; }
+.ar.high{background:var(--green-tint);color:#166534;} .ar.mid{background:var(--amber-tint);color:#92400E;} .ar.low{background:var(--red-tint);color:#991B1B;}
+.srl { display:flex; flex-direction:column; gap:5px; }
+.srx { display:flex; align-items:center; gap:8px; font-size:11.5px; padding:6px 0; border-bottom:1px dashed var(--line-2); }
+.srx:last-child { border:0; }
+.sfav { width:18px;height:18px;border-radius:5px; display:grid;place-items:center; font-size:9px;font-weight:700;color:#fff; flex-shrink:0; }
+.snm { flex:1; font-weight:500; color:var(--ink-2); }
+.smn { font-weight:600; color:var(--ink-3); font-size:10.5px; }
+.ssn { font-size:9.5px; padding:1px 6px; border-radius:4px; font-weight:700; }
+.ssn.pos{background:var(--green-tint);color:#166534;} .ssn.neu{background:var(--surface-2);color:var(--ink-4);border:1px solid var(--line);} .ssn.neg{background:var(--red-tint);color:#991B1B;}
+.ins-band { margin-top:16px; background:linear-gradient(135deg,#FFFBEB,#FEF3C7); border:1px solid #FDE68A; border-radius:var(--r-lg); padding:16px 18px; }
+.ins-h { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.ins-h h4 { margin:0; font-size:12.5px; font-weight:700; color:#78350F; display:flex; align-items:center; gap:7px; }
+.ins-h .meta { font-size:10.5px; color:#92400E; }
+.ins-cards { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+.ins { background:var(--surface); border:1px solid #FDE68A; border-radius:11px; padding:12px 14px; display:flex; flex-direction:column; gap:8px; transition:transform .2s var(--spring), box-shadow .2s var(--ease); }
+.ins:hover { transform:translateY(-2px); box-shadow:var(--sh-2); }
+.ins-tag { font-size:9.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); }
+.ins-copy { font-size:11.5px; line-height:1.55; color:var(--ink-2); }
+.ins-copy b { color:var(--ink); } .ins-copy code { font-family:'JetBrains Mono',monospace; background:var(--amber-tint); padding:1px 5px; border-radius:4px; font-size:10px; color:#78350F; }
+.ins-foot { display:flex; justify-content:space-between; align-items:center; margin-top:auto; }
+.ins-imp { font-size:10.5px; font-weight:700; color:var(--green); } .ins-imp.risk { color:var(--red); }
+.add-btn { font-size:10.5px; font-weight:600; padding:5px 9px; border-radius:7px; background:var(--ink); color:#fff; border:0; cursor:pointer; transition:transform .15s var(--spring), background .15s var(--ease); display:inline-flex; align-items:center; gap:4px; }
+.add-btn:hover { background:var(--indigo-2); transform:translateY(-1px); }
+.add-btn:active { transform:scale(.94); }
+.add-btn.added { background:var(--green); }
+
+/* ===== VISIBLE-FOR ===== */
+.rings3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:18px; }
+.rc { background:linear-gradient(180deg,#FFFFFF,#FAFBFF); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:16px 18px; display:flex; align-items:center; gap:14px; cursor:pointer; transition:transform .25s var(--spring), box-shadow .2s var(--ease), border-color .15s var(--ease); }
+.rc:hover { transform:translateY(-2px); box-shadow:var(--sh-2); border-color:#C7CFFF; }
+.rc.on { border-color:var(--indigo); background:linear-gradient(180deg,#FFFFFF,var(--indigo-tint)); }
+.ring { width:70px;height:70px; position:relative; flex-shrink:0; } .ring svg { transform:rotate(-90deg); }
+.ring-c { position:absolute; inset:0; display:grid; place-items:center; font-weight:800; font-size:18px; letter-spacing:-.02em; }
+.ring-c small { display:block; font-size:9px; font-weight:700; color:var(--ink-4); text-transform:uppercase; letter-spacing:.05em; margin-top:1px; }
+.ring-meta { flex:1; min-width:0; }
+.ring-meta .pt { font-size:9.5px; font-weight:700; color:var(--ink-4); text-transform:uppercase; letter-spacing:.06em; }
+.ring-meta h4 { margin:2px 0 4px; font-size:13.5px; font-weight:700; letter-spacing:-.01em; }
+.ring-meta .rm { font-size:11px; color:var(--ink-3); line-height:1.45; }
+.ring-meta .rm b { color:var(--ink); }
+.ring-meta .delta { margin-top:5px; font-size:10.5px; font-weight:600; }
+.delta.up{color:var(--green);} .delta.flat{color:var(--ink-4);} .delta.down{color:var(--red);}
+.tracker { background:var(--surface-2); border:1px solid var(--line); border-radius:var(--r-lg); overflow:hidden; }
+.tracker-h { padding:14px 18px; background:var(--surface); border-bottom:1px solid var(--line-2); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+.tracker-h h4 { margin:0; font-size:13px; font-weight:700; display:flex; align-items:center; gap:7px; }
+.wave-tabs { display:flex; gap:4px; background:var(--bg-2); padding:3px; border-radius:9px; }
+.wave-tab { padding:6px 12px; border-radius:7px; font-size:11.5px; font-weight:600; color:var(--ink-3); cursor:pointer; background:transparent; border:0; display:flex; align-items:center; gap:7px; transition:all .2s var(--spring); }
+.wave-tab:hover { color:var(--ink); } .wave-tab:active { transform:scale(.96); }
+.wave-tab.on { background:var(--surface); color:var(--ink); box-shadow:var(--sh-1); }
+.wave-tab .gr { font-size:9.5px; font-weight:800; padding:1px 5px; border-radius:4px; background:var(--surface-2); border:1px solid var(--line); color:var(--ink-3); }
+.wave-tab.on .gr.g-bp{background:var(--green-tint);border-color:#BBF7D0;color:#166534;} .wave-tab.on .gr.g-b{background:var(--amber-tint);border-color:#FDE68A;color:#92400E;} .wave-tab.on .gr.g-c{background:var(--red-tint);border-color:#FECACA;color:#991B1B;}
+.tbody { display:grid; grid-template-columns:300px 1fr; }
+.tower { padding:22px 18px; background:linear-gradient(180deg,#FFFFFF,#F8F9FC); border-right:1px solid var(--line-2); }
+.tg-row { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:14px; }
+.tg-l { font-size:10.5px; font-weight:700; color:var(--ink-4); text-transform:uppercase; letter-spacing:.06em; }
+.tg-g { font-weight:800; font-size:32px; letter-spacing:-.04em; line-height:1; }
+.tg-g.g-bp{color:var(--green);} .tg-g.g-b{color:var(--amber);} .tg-g.g-c{color:var(--red);}
+.tstack { display:flex; flex-direction:column-reverse; gap:5px; margin-top:10px; }
+.blk { height:34px; border-radius:8px; display:flex; align-items:center; gap:9px; padding:0 12px; font-size:11.5px; font-weight:600; border:1.5px dashed var(--line); background:var(--surface); color:var(--ink-4); transition:transform .25s var(--spring), box-shadow .2s var(--ease); }
+.blk:hover { transform:translateY(-1px); box-shadow:var(--sh-1); }
+.blk.done{background:linear-gradient(135deg,#DCFCE7,#BBF7D0); border:1.5px solid #86EFAC; color:#14532D;} .blk.prog{background:linear-gradient(135deg,var(--amber-tint),#FDE68A); border:1.5px solid #FBBF24; color:#78350F;} .blk.empty{background:repeating-linear-gradient(45deg,#F8F9FC,#F8F9FC 6px,#F1F2F6 6px,#F1F2F6 12px); border:1.5px dashed var(--line); color:var(--ink-5);}
+.blk .bi { width:18px;height:18px;border-radius:5px; display:grid;place-items:center; font-size:10.5px;font-weight:800; }
+.blk.done .bi{background:rgba(255,255,255,.75);color:var(--green);} .blk.prog .bi{background:rgba(255,255,255,.75);color:var(--amber);} .blk.empty .bi{background:var(--surface);color:var(--ink-5);}
+.blk .bp { margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:700; }
+.tlegend { margin-top:14px; padding-top:12px; border-top:1px dashed var(--line); display:flex; gap:10px; font-size:10px; color:var(--ink-4); flex-wrap:wrap; }
+.tlegend span { display:inline-flex; align-items:center; gap:4px; } .tlegend .sw { width:9px;height:9px;border-radius:3px; }
+.wcontent { padding:0; }
+
+/* issues detected (collapsible) */
+.issues-head { padding:12px 18px; background:var(--surface); border-bottom:1px solid var(--line-2); display:flex; justify-content:space-between; align-items:center; }
+.issues-head h5 { margin:0; font-size:11.5px; font-weight:700; display:flex; align-items:center; gap:7px; }
+.issues-head .src-tag { font-size:9.5px; color:var(--ink-4); padding:2px 7px; background:var(--surface-2); border:1px solid var(--line); border-radius:4px; font-family:'JetBrains Mono',monospace; }
+.ilist { background:var(--surface); }
+.irow { border-bottom:1px solid var(--line-2); }
+.irow:last-child { border-bottom:0; }
+.irow-head { padding:11px 18px; display:grid; grid-template-columns:auto 1fr auto auto auto; gap:12px; align-items:center; cursor:pointer; transition:background .15s var(--ease); }
+.irow-head:hover { background:var(--bg-2); }
+.sev { font-size:9px; font-weight:800; padding:3px 7px; border-radius:5px; text-transform:uppercase; letter-spacing:.04em; white-space:nowrap; }
+.sev.critical{background:var(--red-tint);color:#991B1B;} .sev.warning{background:var(--amber-tint);color:#92400E;} .sev.pass{background:var(--green-tint);color:#166534;}
+.irow-title { font-size:12.5px; font-weight:600; }
+.irow-title small { display:block; font-size:10.5px; color:var(--ink-4); font-weight:500; margin-top:1px; }
+.icat { font-size:10px; color:var(--ink-4); padding:2px 8px; border-radius:999px; background:var(--surface-2); border:1px solid var(--line-2); white-space:nowrap; }
+.iimp { font-size:10px; font-weight:700; padding:2px 8px; border-radius:999px; white-space:nowrap; }
+.iimp.High{background:var(--red-tint);color:#991B1B;} .iimp.Medium{background:var(--amber-tint);color:#92400E;} .iimp.Low{background:var(--surface-2);color:var(--ink-4);border:1px solid var(--line);}
+.iexpand { width:24px;height:24px;border-radius:7px; display:grid;place-items:center; color:var(--ink-4); background:var(--surface-2); border:1px solid var(--line-2); transition:transform .25s var(--spring); }
+.irow.open .iexpand { transform:rotate(180deg); background:var(--ink); color:#fff; border-color:var(--ink); }
+.irow-body { max-height:0; overflow:hidden; transition:max-height .4s var(--ease); }
+.irow.open .irow-body { max-height:600px; }
+.irow-inner { padding:4px 18px 16px; }
+.see-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
+.see { background:var(--surface-2); border:1px solid var(--line-2); border-radius:10px; padding:11px 13px; }
+.see h6 { margin:0 0 5px; font-size:10px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; display:flex; align-items:center; gap:6px; color:var(--ink-4); }
+.see.user h6 { color:var(--indigo); } .see.ai h6 { color:var(--purple); }
+.see p { margin:0; font-size:12px; color:var(--ink-2); line-height:1.5; }
+.irow-actions { display:flex; gap:8px; flex-wrap:wrap; }
+
+/* ===== GEO ===== */
+.g-grid { display:grid; grid-template-columns:1.05fr 1fr; gap:14px; }
+.gcard { background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:16px 18px; transition:box-shadow .2s var(--ease); }
+.gcard:hover { box-shadow:var(--sh-1); }
+.gcard h4 { margin:0 0 4px; font-size:13px; font-weight:700; display:flex; align-items:center; gap:7px; }
+.gcard .sub { font-size:10.5px; color:var(--ink-4); margin-bottom:12px; }
+.sov-l { display:flex; flex-direction:column; gap:8px; }
+.sovr { display:grid; grid-template-columns:108px 1fr 52px; gap:11px; align-items:center; }
+.sovr .bn { font-size:11.5px; font-weight:600; color:var(--ink-2); }
+.sovr.you .bn { color:var(--indigo); font-weight:700; }
+.sovr.you .bn::before { content:'★ '; color:var(--indigo); }
+.sov-w { height:18px; background:var(--surface-2); border-radius:6px; overflow:hidden; border:1px solid var(--line-2); }
+.sov-b { height:100%; background:linear-gradient(90deg,#6B7280,#9CA3AF); display:flex; align-items:center; padding-left:7px; font-size:9.5px; color:#fff; font-weight:700; transition:width .6s var(--spring); }
+.sovr.you .sov-b { background:linear-gradient(90deg,var(--indigo),var(--purple)); }
+.sovr .pc { font-weight:800; font-size:12px; letter-spacing:-.02em; font-family:'JetBrains Mono',monospace; text-align:right; }
+.callout { margin-top:12px; padding:9px 12px; background:var(--indigo-tint); border-radius:8px; font-size:11px; color:var(--indigo-2); line-height:1.5; }
+.callout b { font-weight:700; }
+.prm { border:1px solid var(--line-2); border-radius:10px; overflow:hidden; }
+.pr { display:grid; grid-template-columns:1fr 50px 50px 50px 50px; border-bottom:1px solid var(--line-2); font-size:10.5px; }
+.pr:last-child { border:0; }
+.pr.head { background:var(--surface-2); font-weight:700; color:var(--ink-4); font-size:9.5px; letter-spacing:.04em; text-transform:uppercase; }
+.pr .c { padding:9px 7px; text-align:center; border-left:1px solid var(--line-2); }
+.pr .c:first-child { text-align:left; padding-left:13px; border-left:0; }
+.pr .q { font-weight:500; color:var(--ink-2); } .pr .q em { font-style:normal; color:var(--ink-4); }
+.rp { display:inline-block; padding:2px 6px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:700; min-width:26px; }
+.rp.top{background:var(--green-tint);color:#166534;} .rp.mid{background:var(--amber-tint);color:#92400E;} .rp.low{background:var(--red-tint);color:#991B1B;} .rp.none{background:var(--surface-2);color:var(--ink-5);}
+.cites { display:flex; flex-direction:column; gap:7px; }
+.cite { display:grid; grid-template-columns:24px 1fr auto auto; gap:10px; padding:9px 12px; align-items:center; background:var(--surface-2); border:1px solid var(--line-2); border-radius:9px; transition:transform .2s var(--spring); }
+.cite:hover { transform:translateX(2px); }
+.cfav { width:24px;height:24px;border-radius:6px; display:grid;place-items:center; font-size:10.5px;font-weight:700;color:#fff; }
+.cn { font-size:11.5px; font-weight:600; } .cn small { display:block; color:var(--ink-4); font-weight:500; font-size:10px; margin-top:1px; }
+.cm { font-size:9.5px; color:var(--ink-4); text-align:right; } .cm b { color:var(--ink-2); font-weight:700; }
+.cst { font-size:9.5px; padding:3px 7px; border-radius:4px; font-weight:700; }
+.cst.own{background:var(--green-tint);color:#166534;} .cst.par{background:var(--amber-tint);color:#92400E;} .cst.mis{background:var(--red-tint);color:#991B1B;}
+.mns { border:1px solid var(--line-2); border-radius:10px; overflow:hidden; }
+.mn { padding:11px 13px; border-bottom:1px solid var(--line-2); display:flex; gap:11px; align-items:flex-start; transition:background .15s var(--ease); }
+.mn:hover { background:var(--bg-2); } .mn:last-child { border:0; }
+.mfv { width:26px;height:26px;border-radius:6px; display:grid;place-items:center; font-size:11px;font-weight:700;color:#fff; flex-shrink:0; }
+.mb { flex:1; min-width:0; }
+.ms { font-size:10px; font-weight:600; color:var(--ink-4); margin-bottom:2px; }
+.mt { font-size:11.5px; color:var(--ink-2); line-height:1.45; }
+.mt strong { background:linear-gradient(transparent 60%, rgba(91,91,214,.18) 60%); padding:0 2px; }
+.mtag { font-size:9.5px; padding:2px 7px; border-radius:4px; font-weight:700; margin-top:6px; display:inline-block; }
+.mtag.opp{background:var(--amber-tint);color:#92400E;} .mtag.win{background:var(--green-tint);color:#166534;} .mtag.risk{background:var(--red-tint);color:#991B1B;}
+
+/* ===== HOLISTIC CAROUSEL ===== */
+.holo { margin-top:22px; background:linear-gradient(135deg,#0A0A0F,#1E1B4B); border-radius:var(--r-xl); padding:22px 24px; color:#fff; position:relative; overflow:hidden; }
+.holo::after { content:''; position:absolute; right:-90px; top:-90px; width:300px; height:300px; background:radial-gradient(circle,rgba(124,58,237,.3),transparent 70%); pointer-events:none; }
+.holo-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; position:relative; z-index:1; }
+.holo-head .ht { display:flex; align-items:center; gap:11px; }
+.holo-head h3 { margin:0; font-size:17px; font-weight:700; letter-spacing:-.02em; }
+.holo-head h3 span { color:#C4B5FD; }
+.holo-head .meta { font-size:10.5px; color:rgba(255,255,255,.5); }
+.holo-nav { display:flex; gap:6px; align-items:center; }
+.cbtn { width:30px; height:30px; border-radius:9px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); color:#fff; display:grid; place-items:center; cursor:pointer; transition:all .2s var(--spring); }
+.cbtn:hover { background:rgba(255,255,255,.16); }
+.cbtn:active { transform:scale(.92); }
+.carousel { position:relative; z-index:1; overflow:hidden; }
+.carousel-track { display:flex; gap:14px; transition:transform .45s var(--spring); }
+.hcard { flex:0 0 calc(25% - 10.5px); background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px 17px; color:#fff; cursor:pointer; transition:transform .25s var(--spring), background .2s var(--ease), border-color .2s var(--ease); display:flex; flex-direction:column; }
+.hcard:hover { transform:translateY(-3px); background:rgba(255,255,255,.08); border-color:rgba(196,181,253,.4); }
+.hcard .htag { font-size:9.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:3px 8px; border-radius:999px; display:inline-block; margin-bottom:10px; width:fit-content; }
+.htag.season{background:rgba(251,191,36,.15);color:#FBBF24;} .htag.quick{background:rgba(52,211,153,.15);color:#6EE7B7;} .htag.comp{background:rgba(244,114,182,.15);color:#F9A8D4;} .htag.evp{background:rgba(167,139,250,.15);color:#C4B5FD;} .htag.tech{background:rgba(96,165,250,.15);color:#93C5FD;}
+.hcard h5 { margin:0 0 6px; font-size:13px; font-weight:700; letter-spacing:-.01em; }
+.hcard p { margin:0; font-size:11px; line-height:1.5; color:rgba(255,255,255,.68); flex:1; }
+.hcard p b { color:#fff; font-weight:600; }
+.hcard .him { margin-top:12px; padding-top:11px; border-top:1px solid rgba(255,255,255,.08); display:flex; justify-content:space-between; align-items:center; }
+.hcard .him .num { font-size:15px; font-weight:800; letter-spacing:-.02em; }
+.him .num.amber{color:#FBBF24;} .him .num.green{color:#6EE7B7;} .him .num.pink{color:#F9A8D4;} .him .num.purple{color:#C4B5FD;} .him .num.blue{color:#93C5FD;}
+.hcard .him .lbl { font-size:9px; color:rgba(255,255,255,.5); letter-spacing:.04em; text-transform:uppercase; }
+.hcard .open-rec { margin-top:10px; font-size:10.5px; font-weight:600; color:rgba(255,255,255,.8); display:inline-flex; align-items:center; gap:5px; }
+.carousel-dots { display:flex; gap:6px; justify-content:center; margin-top:14px; position:relative; z-index:1; }
+.cdot { width:7px; height:7px; border-radius:999px; background:rgba(255,255,255,.2); cursor:pointer; transition:all .25s var(--spring); }
+.cdot.on { background:#C4B5FD; width:20px; }
+
+/* ===== RECOMMENDATIONS ===== */
+.rec-summary { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:20px; }
+.rec-kind { background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-md); padding:14px 16px; cursor:pointer; transition:transform .25s var(--spring), box-shadow .2s var(--ease), border-color .15s var(--ease); }
+.rec-kind:hover { transform:translateY(-2px); box-shadow:var(--sh-2); border-color:#C7CFFF; }
+.rec-kind.on { border-color:var(--indigo); box-shadow:var(--sh-glow); }
+.rec-kind .rk-ic { width:32px;height:32px;border-radius:9px; display:grid;place-items:center; margin-bottom:10px; }
+.rk-ic.quick{background:var(--green-tint);color:var(--green);} .rk-ic.season{background:var(--amber-tint);color:var(--amber);} .rk-ic.comp{background:var(--purple-tint);color:var(--purple);} .rk-ic.evp{background:var(--indigo-tint);color:var(--indigo-2);} .rk-ic.tech{background:#DBEAFE;color:#1D4ED8;}
+.rec-kind .rk-n { font-size:12px; font-weight:700; }
+.rec-kind .rk-c { font-size:22px; font-weight:800; letter-spacing:-.03em; margin-top:2px; }
+.rec-kind .rk-s { font-size:10.5px; color:var(--ink-4); margin-top:1px; }
+.rec-list { display:flex; flex-direction:column; gap:10px; }
+.rec-item { background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-md); padding:0; overflow:hidden; transition:box-shadow .2s var(--ease); }
+.rec-item:hover { box-shadow:var(--sh-2); }
+.rec-item.flash { animation:flash 1.6s var(--ease); }
+@keyframes flash { 0%{box-shadow:0 0 0 0 rgba(91,91,214,.5);} 30%{box-shadow:0 0 0 5px rgba(91,91,214,.18);} 100%{box-shadow:var(--sh-1);} }
+.rec-top { padding:14px 18px; display:grid; grid-template-columns:auto 1fr auto auto auto; gap:14px; align-items:center; }
+.rec-ic { width:34px;height:34px;border-radius:10px; display:grid;place-items:center; }
+.rec-main .rt { font-size:13.5px; font-weight:700; letter-spacing:-.01em; }
+.rec-main .rd { font-size:11.5px; color:var(--ink-4); margin-top:1px; }
+.rec-impact { text-align:right; }
+.rec-impact .ri-n { font-size:13px; font-weight:800; letter-spacing:-.02em; color:var(--green); }
+.rec-impact .ri-l { font-size:9.5px; color:var(--ink-4); text-transform:uppercase; letter-spacing:.04em; }
+.rec-meta-pill { font-size:10px; font-weight:600; padding:3px 9px; border-radius:999px; background:var(--surface-2); border:1px solid var(--line-2); color:var(--ink-3); white-space:nowrap; }
+.rstatus { font-size:9.5px; font-weight:700; padding:3px 8px; border-radius:5px; text-transform:uppercase; letter-spacing:.04em; }
+.rstatus.todo{background:var(--surface-2);color:var(--ink-4);border:1px solid var(--line);} .rstatus.in_progress{background:var(--amber-tint);color:#92400E;} .rstatus.blocked{background:var(--red-tint);color:#991B1B;} .rstatus.done{background:var(--green-tint);color:#166534;}
+
+/* fix steps detail */
+.fix-wrap { display:grid; grid-template-columns:1.4fr 1fr; gap:16px; }
+.fix-steps { display:flex; flex-direction:column; gap:10px; }
+.fstep { display:grid; grid-template-columns:28px 1fr; gap:12px; align-items:start; background:var(--surface); border:1px solid var(--line-2); border-radius:12px; padding:13px 15px; }
+.fstep .fn { width:28px;height:28px;border-radius:8px; background:var(--indigo-tint); color:var(--indigo-2); font-weight:800; font-size:13px; display:grid; place-items:center; }
+.fstep .ft { font-size:12.5px; color:var(--ink-2); line-height:1.45; }
+.fstep .fc { margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--ink-4); background:var(--surface-2); border:1px solid var(--line-2); border-radius:6px; padding:4px 8px; display:inline-block; }
+.fix-side { background:var(--surface); border:1px solid var(--line-2); border-radius:14px; padding:16px 18px; height:fit-content; }
+.fix-side h5 { margin:0 0 12px; font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-4); }
+.fix-meta { display:flex; flex-direction:column; gap:11px; }
+.fmeta-row { display:flex; justify-content:space-between; align-items:center; font-size:12px; }
+.fmeta-row .l { color:var(--ink-4); } .fmeta-row .v { font-weight:700; }
+
+/* ===== FOOTER ===== */
+.foot { margin-top:26px; padding:16px 0; border-top:1px solid var(--line-2); display:flex; justify-content:space-between; align-items:center; font-size:10.5px; color:var(--ink-4); }
+.foot .mk { display:flex; align-items:center; gap:7px; font-weight:600; }
+
+@media (max-width:1140px) {
+  .kpi-strip,.cards-row,.snapshot,.ins-cards,.g-grid,.rings3,.t-grid,.see-grid,.fix-wrap { grid-template-columns:1fr; }
+  .drill-grid { grid-template-columns:1fr; } .tbody { grid-template-columns:1fr; }
+  .rec-summary { grid-template-columns:1fr 1fr; }
+  .hcard { flex:0 0 calc(50% - 7px); }
+  .mnav { overflow-x:auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">J</div>
+      <div class="brand-text"><strong>Joveo Organic</strong><small>SEO &amp; GEO Command Center</small></div>
+    </div>
+    <div class="site-pill"><span class="live"></span>careers.givaudan.com/global/en/home</div>
+    <div class="tspacer"></div>
+    <div class="tcontrols">
+      <button class="btn ghost"><svg class="lc-sm" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Last 30 days</button>
+      <button class="btn ghost"><svg class="lc-sm" viewBox="0 0 24 24"><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg> vs prev 30d</button>
+      <button class="btn"><svg class="lc-sm" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</button>
+      <button class="btn primary"><svg class="lc-sm" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg> Share with Givaudan</button>
+    </div>
+  </div>
+</div>
+
+<!-- MASTER NAV (game menu) -->
+<div class="mnav-wrap">
+  <nav class="mnav" id="mnav"></nav>
+</div>
+
+<div class="page">
+  <main id="view"></main>
+  <div class="foot">
+    <div class="mk"><div class="brand-mark" style="width:18px;height:18px;font-size:9px;border-radius:5px">J</div> Joveo Organic · Confidential · For Givaudan leadership review</div>
+    <div>v0.3 · Command Center · May 2026 · careers.givaudan.com</div>
+  </div>
+</div>
+
+<script>
+/* =====================================================
+   DATA
+   ===================================================== */
+const DATA = {
+  kpis: [
+    { icon:'a', lbl:'Monthly Organic Visits', count:8.4, suffix:'K', trend:'up', trendText:'+12.4% vs prev 30d' },
+    { icon:'b', lbl:'AI Visibility · Unbranded', count:14.2, suffix:'%', trend:'down', trendText:'−2.1 pts · dsm-firmenich +5.4' },
+    { icon:'c', lbl:'Branded vs Unbranded', raw:'92/8', trend:'flat', trendText:'Heavily branded-dependent' },
+    { icon:'d', lbl:'Paid-Equivalent Leak', raw:'$0.9M/yr', trend:'up', trendText:'Capturable in 9–12 months' }
+  ],
+  snapshot: {
+    strengths: ['Branded searches (e.g. <strong>givaudan careers</strong>) perform well','Sitemap + JobPosting schema live on key templates','Flavorist hub traffic up <strong>34%</strong>'],
+    gaps: ['<strong>8 in 10</strong> visits already know the Givaudan name','Mobile job listings load slowly (LCP 3.8s)','Only <strong>112 of 328</strong> pages fully indexed'],
+    next: [
+      { label:'Grow flavorist content', nav:'#/recommendations/fix-06' },
+      { label:'Fix mobile job-page speed', nav:'#/recommendations/fix-02' },
+      { label:'Open recommendation inbox', nav:'#/recommendations' }
+    ]
+  },
+  waves: {
+    wave1: { grade:'B+', gradeClass:'g-bp', score:79, label:'Technical · Wave 1',
+      blocks:[
+        {label:'Sitemap submitted',pct:100,state:'done'},
+        {label:'JobPosting schema · top 20',pct:100,state:'done'},
+        {label:'BreadcrumbList schema',pct:65,state:'prog'},
+        {label:'FAQPage schema · top role pages',pct:25,state:'prog'},
+        {label:'Organization schema · home',pct:0,state:'empty'},
+        {label:'Core Web Vitals · mobile LCP',pct:0,state:'empty'},
+        {label:'Internal linking graph',pct:0,state:'empty'}
+      ],
+      issues:['seo-04','seo-05','seo-03'],
+      tasks:[
+        {id:'GV-01',title:'Meta titles + descriptions · top 20 job pages',detail:'Target: <code>[Role] · [City] · Givaudan Careers</code>.',owner:'Joveo · Content',eta:'28 May',status:'prog',statusLabel:'In Progress'},
+        {id:'GV-02',title:'FAQPage schema · role + EVP pages',detail:'Unlocks AI Overview eligibility.',owner:'Joveo · Dev',eta:'02 Jun',status:'prog',statusLabel:'In Progress'},
+        {id:'GV-03',title:'Organization schema · homepage',detail:'Knowledge Panel currently unclaimed.',owner:'Joveo · Dev',eta:'03 Jun',status:'todo',statusLabel:'Not Started'},
+        {id:'GV-04',title:'CWV · mobile LCP regression',detail:'Hero video 3.8s. <code>LCP target ≤ 2.5s</code>.',owner:'Givaudan · Dev',eta:'10 Jun',status:'block',statusLabel:'Blocked'},
+        {id:'GV-05',title:'BreadcrumbList schema · all templates',detail:'Template-level injection · auto-cover 328 pages.',owner:'Joveo · Dev',eta:'12 Jun',status:'prog',statusLabel:'In Progress'}
+      ]},
+    wave2: { grade:'B', gradeClass:'g-b', score:45, label:'Content · Wave 2',
+      blocks:[
+        {label:'EVP narrative · enriched',pct:100,state:'done'},
+        {label:'Locations · 6 of 24 city hubs',pct:25,state:'prog'},
+        {label:'Role pillars · flavorist + perfumer',pct:40,state:'prog'},
+        {label:'"Engage Your Senses" stories blog',pct:0,state:'empty'},
+        {label:'Content magnets · salary guide',pct:0,state:'empty'},
+        {label:'Quarterly editorial calendar',pct:0,state:'empty'}
+      ],
+      issues:['seo-01','seo-02','seo-06','seo-07'],
+      tasks:[
+        {id:'GV-11',title:'Create /careers/sao-paulo/ city hub',detail:'<code>GSC: "vagas perfumista são paulo" 1,247 imp/mo, pos 8.2</code>.',owner:'Joveo · Content',eta:'05 Jun',status:'prog',statusLabel:'In Progress'},
+        {id:'GV-12',title:'Flavorist Role Pillar Hub',detail:'/careers/flavorist/ master hub. <code>+71% YoY queries</code>.',owner:'Joveo · Content',eta:'10 Jun',status:'todo',statusLabel:'Not Started'},
+        {id:'GV-13',title:'Sensory Scientist EVP Page',detail:'Zero coverage across all 4 AI engines.',owner:'Joveo · Content',eta:'15 Jun',status:'prog',statusLabel:'In Progress'},
+        {id:'GV-14',title:'"Engage Your Senses" stories cluster',detail:'6 narratives · Vernier, Argenteuil, Cincinnati, Singapore, Mexico, São Paulo.',owner:'Joveo + Givaudan',eta:'20 Jun',status:'todo',statusLabel:'Not Started'},
+        {id:'GV-15',title:'Sustainability careers page',detail:'Counter dsm-firmenich pos #2. EVP + 6 anchor roles.',owner:'Joveo + Givaudan ESG',eta:'25 Jun',status:'todo',statusLabel:'Not Started'}
+      ]},
+    wave3: { grade:'C', gradeClass:'g-c', score:29, label:'Off-Page · Wave 3',
+      blocks:[
+        {label:'LinkedIn narrative cadence',pct:60,state:'prog'},
+        {label:'GBP · Vernier HQ',pct:0,state:'empty'},
+        {label:'Reddit r/Perfumery · AMA',pct:0,state:'empty'},
+        {label:'Glassdoor reviewer response',pct:0,state:'empty'},
+        {label:'Trade-pub guest articles',pct:0,state:'empty'},
+        {label:'PR · Wikipedia sister pages',pct:0,state:'empty'}
+      ],
+      issues:['geo-04','geo-03'],
+      tasks:[
+        {id:'GV-21',title:'Claim Google Business Profile · Vernier HQ',detail:'Unclaimed. Knowledge Panel + authority backlink.',owner:'Joveo · Off-page',eta:'08 Jun',status:'todo',statusLabel:'Not Started'},
+        {id:'GV-22',title:'Reddit r/Perfumery · authoritative thread',detail:'Respond to 14d Mane-vs-Big-Four thread.',owner:'Joveo · Off-page',eta:'03 Jun',status:'prog',statusLabel:'In Progress'},
+        {id:'GV-23',title:'perfumerflavorist.com guest article',detail:'"Inside Givaudan\'s Argenteuil intake."',owner:'Joveo + Givaudan PR',eta:'20 Jun',status:'todo',statusLabel:'Not Started'},
+        {id:'GV-24',title:'Glassdoor response cadence',detail:'0 / 1,842 reviews answered. Train 1 owner/region.',owner:'Givaudan · TA',eta:'15 Jun',status:'todo',statusLabel:'Not Started'},
+        {id:'GV-25',title:'LinkedIn · weekly narrative push',detail:'1 employee story / week / region.',owner:'Joveo + Givaudan Brand',eta:'Ongoing',status:'prog',statusLabel:'In Progress'}
+      ]}
+  },
+  issues: {
+    'seo-01':{type:'seo',severity:'critical',category:'Content gaps',title:'Sustainability careers cluster missing',impact:'High',fixIds:['fix-03','fix-07'],userSees:'Searching "sustainable flavor jobs" shows dsm-firmenich at #2. Givaudan has no dedicated sustainability careers page.',aiSees:'AI engines cite dsm-firmenich ESG pages. Givaudan is absent from "best sustainable flavor companies" prompt answers.',pages:['/careers/ (no sustainability hub)','/global/en/home']},
+    'seo-02':{type:'seo',severity:'critical',category:'Local & city pages',title:'São Paulo city hub absent',impact:'High',fixIds:['fix-04'],userSees:'1,247 monthly impressions for "perfumista são paulo" — position 8.2 with no local hub.',aiSees:'Zero AI mentions for "fragrance jobs São Paulo". Perplexity and Gemini recommend competitor career sites.',pages:['/careers/ (no São Paulo hub)']},
+    'seo-03':{type:'seo',severity:'warning',category:'Performance',title:'Mobile LCP on jobs listing',impact:'Medium',fixIds:['fix-02'],userSees:'Hero video on /jobs/ loads at 3.8s LCP on mobile. Mobile CTR down 18%.',aiSees:'Page speed signals reduce crawl priority. Mobile ranking suppressed for competitive role queries.',pages:['/jobs/job-description (LCP 3.2s)'],cwv:[{label:'LCP',value:'3.2s',status:'warn',target:'≤ 2.5s'},{label:'FCP',value:'1.8s',status:'pass',target:'≤ 1.8s'},{label:'CLS',value:'0.08',status:'pass',target:'≤ 0.1'}]},
+    'seo-04':{type:'seo',severity:'warning',category:'Schema & markup',title:'Organization schema missing on homepage',impact:'Medium',fixIds:['fix-01'],userSees:'Knowledge Panel for Givaudan careers is unclaimed.',aiSees:'Without Organization JSON-LD, AI engines rely on Wikipedia and Glassdoor for entity facts.',pages:['/global/en/home']},
+    'seo-05':{type:'seo',severity:'warning',category:'Schema & markup',title:'JobPosting schema incomplete',impact:'Medium',fixIds:['fix-05'],userSees:'23% of live jobs missing salary and employment type in structured data.',aiSees:'Incomplete JobPosting reduces eligibility for AI Overview job modules.',pages:['/jobs/job-description (template)','+ 92 live job pages']},
+    'seo-06':{type:'seo',severity:'warning',category:'Content gaps',title:'Sensory scientist EVP gap',impact:'Medium',fixIds:['fix-06'],userSees:'No page targets "sensory scientist careers".',aiSees:'Prompt "best companies for sensory scientists" returns zero Givaudan mentions.',pages:['(page does not exist)']},
+    'seo-07':{type:'seo',severity:'warning',category:'Local & city pages',title:'City headlines misaligned with search intent',impact:'Low',fixIds:['fix-08'],userSees:'Vernier, Cincinnati, Mexico, and Singapore pages use generic H1s.',aiSees:'City pages lack FAQ blocks — reduces AI Overview eligibility.',pages:['/careers/vernier','/careers/cincinnati','/careers/mexico','/careers/singapore']},
+    'geo-01':{type:'geo',severity:'critical',category:'Prompt coverage',title:'São Paulo fragrance jobs blind spot',impact:'High',fixIds:['fix-04'],userSees:'Candidates asking AI about fragrance roles in Brazil get competitor links only.',aiSees:'0/4 engines mention Givaudan for "fragrance jobs São Paulo".',pages:['Prompt: "fragrance jobs São Paulo"']},
+    'geo-02':{type:'geo',severity:'critical',category:'Share of voice',title:'dsm-firmenich mentioned 1.6× more often',impact:'High',fixIds:['fix-03','fix-07'],userSees:'When candidates ask "best fragrance company to work at", competitors appear first.',aiSees:'SOV 14.2% vs leader 23.1%. Gap driven by sustainability and role-pillar content.',pages:['Prompt cluster: employer comparison']},
+    'geo-03':{type:'geo',severity:'warning',category:'Citations',title:'Reddit narrative skews competitor-heavy',impact:'Medium',fixIds:['fix-09'],userSees:'r/Perfumery thread mentions dsm-firmenich four times, Givaudan once.',aiSees:'Reddit is 1.4K AI cites for employer prompts. Competitor names dominate.',pages:['reddit.com/r/Perfumery']},
+    'geo-04':{type:'geo',severity:'warning',category:'Citations',title:'Google Business Profile unclaimed',impact:'Medium',fixIds:['fix-10'],userSees:'Vernier HQ GBP is unclaimed with no career link.',aiSees:'Unclaimed GBP prevents entity consolidation for Vernier location queries.',pages:['Google Business Profile · Vernier HQ']},
+    'geo-05':{type:'geo',severity:'warning',category:'Prompt coverage',title:'Perfumer career path underrepresented',impact:'Medium',fixIds:['fix-11'],userSees:'"Perfumer career path" prompts return generic industry advice.',aiSees:'ChatGPT and Gemini rank Givaudan "low" on perfumer path prompts.',pages:['Prompt: "perfumer career path"']}
+  },
+  fixes: {
+    'fix-01':{title:'Organization + FAQ schema on homepage',kind:'tech',impact:'+Knowledge Panel eligibility',effort:'2 hrs',owner:'Dev',status:'todo',steps:[{text:'Open Site Pages → home → SEO settings → Advanced tab.',cms:'Site Pages → home → SEO settings → Advanced'},{text:'Paste Organization JSON-LD with name, url, logo, sameAs links.',cms:'SEO settings → Advanced → Schema editor'},{text:'Add FAQPage block for top 5 candidate questions from GSC.',cms:'SEO settings → Advanced → Schema → FAQPage'},{text:'Validate with Rich Results Test and re-publish.',cms:'Publish → Validate schema on home'}]},
+    'fix-02':{title:'Mobile LCP on jobs listing',kind:'tech',impact:'−410 clicks/mo recovered',effort:'4 hrs',owner:'Dev',status:'blocked',steps:[{text:'Navigate to /jobs/ page in page builder.',cms:'Site Pages → Jobs listing → Edit'},{text:'Set hero video to lazy-load: defer init until scroll or tap.',cms:'Widget settings → Video → Loading → Deferred'},{text:'Replace poster image with WebP under 200KB.',cms:'Media library → replace asset'},{text:'Re-scan and confirm LCP ≤ 2.5s on mobile.',cms:'Re-scan → /jobs/job-description'}]},
+    'fix-03':{title:'Sustainability careers hub',kind:'comp',impact:'$140K paid-equivalent/yr',effort:'2 weeks',owner:'Content',status:'todo',steps:[{text:'Create new page at /careers/sustainability/.',cms:'Site Pages → Add page → City/EVP template'},{text:'Write EVP narrative with ESG commitments and anchor roles.',cms:'Page builder → content blocks'},{text:'Set meta title: Sustainable flavor & fragrance careers · Givaudan.',cms:'SEO settings → Basic → Title + Description'},{text:'Internal link from home, flavorist hub, and footer.',cms:'Page builder → Link widgets'}]},
+    'fix-04':{title:'São Paulo city hub',kind:'season',impact:'+1.2K impressions/mo',effort:'1 week',owner:'Content',status:'in_progress',steps:[{text:'Add page /careers/sao-paulo/ using city hub template.',cms:'Site Pages → Add page → City hub template'},{text:'Localize H1: Perfumista e cientista · Carreiras Givaudan São Paulo.',cms:'Page canvas → main title widget'},{text:'Embed open roles filter for Brazil locations.',cms:'Widgets → Job list → Location filter'},{text:'Submit URL in sitemap and request indexing.',cms:'SEO settings → Sitemap → Submit'}]},
+    'fix-05':{title:'JobPosting schema completion',kind:'tech',impact:'Google for Jobs uplift',effort:'6 hrs',owner:'Dev',status:'in_progress',steps:[{text:'Open Job Detail template SEO settings.',cms:'Site Pages → Job Detail → SEO settings → Advanced'},{text:'Map baseSalary, employmentType, jobLocation variables.',cms:'Schema editor → JobPosting fields'},{text:'Run validation on 5 sample live jobs.',cms:'Validate → job-description slug'},{text:'Bulk apply to all published jobs.',cms:'Template → Apply to all job pages'}]},
+    'fix-06':{title:'Sensory scientist EVP page',kind:'quick',impact:'New unbranded entry point',effort:'3 days',owner:'Content',status:'todo',steps:[{text:'Create /careers/sensory-scientist/ with AI-assisted draft.',cms:'Site Pages → Create with AI'},{text:'Include day-in-life, qualifications, and Argenteuil link.',cms:'Page builder → section blocks'},{text:'Optimize meta for "sensory scientist careers".',cms:'SEO settings → Basic'},{text:'Scan and fix any heading or image issues.',cms:'Re-scan → sensory-scientist'}]},
+    'fix-07':{title:'Sustainability internal linking wave',kind:'comp',impact:'Lift SOV vs dsm-firmenich',effort:'3 hrs',owner:'Content',status:'todo',steps:[{text:'Add sustainability CTA block on flavorist and perfumer hubs.',cms:'Page builder → CTA widget'},{text:'Update footer careers navigation.',cms:'Global Sections → Footer'},{text:'Cross-link from Vernier and Singapore city pages.',cms:'City pages → Link widgets'}]},
+    'fix-08':{title:'City headline rewrites',kind:'quick',impact:'+400 clicks/mo (projected)',effort:'~6 hrs',owner:'Content',status:'todo',steps:[{text:'Vernier: H1 → Food scientist & flavor jobs · Vernier, Switzerland.',cms:'Site Pages → vernier → title widget'},{text:'Cincinnati: match "flavor chemist jobs Cincinnati" query.',cms:'Site Pages → cincinnati → title widget'},{text:'Mexico & Singapore: align with GSC top queries per market.',cms:'SEO settings → Basic → review GSC export'},{text:'Re-scan all four pages.',cms:'Re-scan → batch'}]},
+    'fix-09':{title:'Reddit r/Perfumery response',kind:'comp',impact:'Shift competitor-heavy citations',effort:'2 hrs',owner:'Off-page',status:'in_progress',steps:[{text:'Draft authoritative reply on Mane-vs-Big-Four thread.',cms:'Off-page · not in CMS'},{text:'Link Argenteuil apprenticeship hub with UTM tracking.',cms:'Off-page · link builder'},{text:'Monitor AI citation shift over 30 days.',cms:'GEO → Citations & mentions'}]},
+    'fix-10':{title:'Claim Google Business Profile',kind:'tech',impact:'Entity consolidation · Vernier',effort:'1 hr + verify',owner:'Off-page',status:'todo',steps:[{text:'Verify Vernier HQ listing via postcard or phone.',cms:'Off-page · Google Business Profile'},{text:'Add official careers URL and open roles link.',cms:'GBP → Website → careers.givaudan.com'},{text:'Repeat for Argenteuil and Cincinnati locations.',cms:'GBP → Add location'}]},
+    'fix-11':{title:'Perfumer career path content',kind:'evp',impact:'Own "perfumer career path" prompt',effort:'4 days',owner:'Content',status:'todo',steps:[{text:'Expand Argenteuil hub with apprenticeship timeline.',cms:'Site Pages → argenteuil → content'},{text:'Add FAQ: How to become a perfumer at Givaudan.',cms:'SEO settings → Advanced → FAQPage'},{text:'Internal link from home and flavorist hub.',cms:'Page builder → Link widgets'}]}
+  },
+  recKinds: {
+    quick:{name:'Quick wins',icon:'<svg class="lc" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',sub:'low effort'},
+    season:{name:'Seasonal',icon:'<svg class="lc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',sub:'time-boxed'},
+    comp:{name:'Competitor',icon:'<svg class="lc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',sub:'win back SOV'},
+    evp:{name:'EVP',icon:'<svg class="lc" viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21.4 8 14 2 9.4h7.6z"/></svg>',sub:'brand narrative'},
+    tech:{name:'Technical',icon:'<svg class="lc" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2-2 2.5-2.5z"/></svg>',sub:'site health'}
+  },
+  // weekly carousel plays → each maps to a fix in the recommendations tab
+  carousel: [
+    { tag:'season', tagLabel:'Seasonal window', title:'World Perfumery Congress · Cannes · 22–24 June', body:'Publish <b>"Behind the scent: a day with a Givaudan perfumer"</b> before May 25 to capture cross-traffic. Anchor: <i>perfumer career path</i>.', num:'+2.1K', numClass:'amber', lbl:'Sessions in window', fix:'fix-11' },
+    { tag:'quick', tagLabel:'4 H1 quick fixes', title:'~6 hours of dev · top-of-funnel lift', body:'Rewrite H1s on <b>/vernier/, /cincinnati/, /mexico/, /singapore/</b> to match GSC top impression queries.', num:'+400', numClass:'green', lbl:'Clicks/mo proj', fix:'fix-08' },
+    { tag:'comp', tagLabel:'Competitor counter', title:'dsm-firmenich claiming "sustainable flavor jobs"', body:'They rank <b>#2</b> for the cluster — you have no page. Build <b>/careers/sustainability/</b>.', num:'$140K', numClass:'pink', lbl:'Annual paid eq.', fix:'fix-03' },
+    { tag:'evp', tagLabel:'EVP amplification', title:'"Engage Your Senses" is under-indexed', body:'Appears on only <b>3 of 328</b> indexed pages. AI engines can\'t ground on it. Repeat across role + city hubs.', num:'+38%', numClass:'purple', lbl:'AI mention lift', fix:'fix-11' },
+    { tag:'tech', tagLabel:'Technical fix', title:'Mobile jobs listing is bleeding clicks', body:'Hero video LCP is <b>3.8s</b> on iOS 17.4+. Defer the video to recover mobile CTR within a week.', num:'−410', numClass:'blue', lbl:'Clicks/mo at risk', fix:'fix-02' },
+    { tag:'comp', tagLabel:'Local expansion', title:'São Paulo blind spot · zero AI presence', body:'dsm-firmenich just announced a <b>40-role R&amp;D hub</b> in São Paulo. Stand up <b>/careers/sao-paulo/</b> to enter the conversation.', num:'+1.2K', numClass:'green', lbl:'Impressions/mo', fix:'fix-04' }
+  ]
+};
+
+const TABS = [
+  { id:'overview', label:'Overview', hash:'#/overview', icon:'<svg class="lc-sm" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>' },
+  { id:'traffic', label:'Traffic', hash:'#/traffic', icon:'<svg class="lc-sm" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>' },
+  { id:'visible', label:'Visible-for', hash:'#/visible', icon:'<svg class="lc-sm" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' },
+  { id:'geo', label:'GEO', hash:'#/geo', icon:'<svg class="lc-sm" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>' },
+  { id:'recommendations', label:'Recommendations', hash:'#/recommendations', icon:'<svg class="lc-sm" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>', cnt:5 }
+];
+
+const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+/* ---------- ROUTER ---------- */
+function parseRoute() {
+  const h = location.hash.slice(1) || '/overview';
+  const p = h.split('/').filter(Boolean);
+  if (p[0]==='visible') {
+    if (p[1]==='issue' && p[2]) return {name:'issue', id:p[2], module:'visible'};
+    if (['wave1','wave2','wave3'].includes(p[1])) return {name:'visible', wave:p[1], module:'visible'};
+    return {name:'visible', wave:'wave1', module:'visible'};
+  }
+  if (p[0]==='traffic') return {name:'traffic', module:'traffic'};
+  if (p[0]==='geo') {
+    if (p[1]==='issue' && p[2]) return {name:'issue', id:p[2], module:'geo'};
+    return {name:'geo', module:'geo'};
+  }
+  if (p[0]==='recommendations') {
+    if (p[1]) return {name:'rec-detail', id:p[1], module:'recommendations'};
+    return {name:'recommendations', module:'recommendations'};
+  }
+  return {name:'overview', module:'overview'};
+}
+function navigate(hash){ if(location.hash!==hash) location.hash=hash; else render(); }
+window.addEventListener('hashchange', render);
+
+/* ---------- SHARED RENDER BITS ---------- */
+function kpiStrip() {
+  return '<div class="kpi-strip">' + DATA.kpis.map((k,i)=>{
+    const ic = {a:'<svg class="lc-lg" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+      b:'<svg class="lc-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></svg>',
+      c:'<svg class="lc-lg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>',
+      d:'<svg class="lc-lg" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>'}[k.icon];
+    const val = k.raw ? k.raw : ('<span class="kpi-num" data-count="'+k.count+'" data-suffix="'+(k.suffix||'')+'">0</span>');
+    const tIcon = k.trend==='up' ? '<svg class="lc-sm" viewBox="0 0 24 24" style="width:11px;height:11px"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>'
+      : k.trend==='down' ? '<svg class="lc-sm" viewBox="0 0 24 24" style="width:11px;height:11px"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>' : '';
+    return '<div class="kpi"><div class="kpi-icon '+k.icon+'">'+ic+'</div><div class="kpi-body">'+
+      '<div class="kpi-lbl">'+esc(k.lbl)+'</div><div class="kpi-val">'+val+(k.suffix&&!k.raw?'<small>'+k.suffix+'</small>':'')+'</div>'+
+      '<div class="kpi-trend '+k.trend+'">'+tIcon+' '+esc(k.trendText)+'</div></div></div>';
+  }).join('') + '</div>';
+}
+
+function abstractionCards() {
+  return '<div class="cards-row">' +
+    // Traffic
+    '<div class="card t-traffic" data-nav="#/traffic">'+
+      '<div class="card-head"><div class="card-tag"><span class="tagicon"><svg class="lc-sm" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span>Traffic</div>'+
+      '<div class="card-chevron"><svg class="lc-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>'+
+      '<div class="card-head-num"><div class="card-num">8.4<small>K</small></div><div class="card-delta up">▲ 12%</div></div>'+
+      '<div class="card-headline">8 in 10 visits already knew your name</div>'+
+      '<div class="card-sub">Branded queries dominate. <b>Unbranded</b> traffic — the discovery layer — is the gap.</div>'+
+      '<div class="card-foot"><div class="mini-traffic hum"><div class="lbl">Human</div><div class="mt-bar"><div style="width:78%"></div></div><div class="num">8.4K</div></div>'+
+      '<div class="mini-traffic bot"><div class="lbl">Bot</div><div class="mt-bar"><div style="width:42%"></div></div><div class="num">1.8M</div></div></div>'+
+      '<div class="reveal"><b>3 GSC insights waiting</b> — a flavorist page is up 34% in clicks, and 4 H1 quick fixes could net ~400 clicks/mo.</div>'+
+    '</div>'+
+    // Visible
+    '<div class="card t-visible" data-nav="#/visible">'+
+      '<div class="card-head"><div class="card-tag"><span class="tagicon"><svg class="lc-sm" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>Visible-for</div>'+
+      '<div class="card-chevron"><svg class="lc-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>'+
+      '<div class="card-head-num"><div class="card-num">B</div><div class="card-delta flat">3 health scores</div></div>'+
+      '<div class="card-headline">Tech ready · content thin · off-page silent</div>'+
+      '<div class="card-sub">Composite health across <b>Tech</b>, <b>Content</b>, <b>Off-Page</b> — 12 issues detected.</div>'+
+      '<div class="card-foot"><div class="mini-rings">'+
+        miniRing(79,'#16A34A','Tech','g-bp','B+')+miniRing(45,'#D97706','Content','g-b','B')+miniRing(29,'#DC2626','Off-Page','g-c','C')+
+      '</div></div>'+
+      '<div class="reveal"><b>15 tasks across 3 waves.</b> Wave 1 tech is 4-of-9 deployed; Wave 2 content has 6 of 24 city hubs live.</div>'+
+    '</div>'+
+    // GEO
+    '<div class="card t-geo" data-nav="#/geo">'+
+      '<div class="card-head"><div class="card-tag"><span class="tagicon"><svg class="lc-sm" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></span>GEO Visibility</div>'+
+      '<div class="card-chevron"><svg class="lc-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>'+
+      '<div class="card-head-num"><div class="card-num">14.2<small>%</small></div><div class="card-delta down">−9 pts vs leader</div></div>'+
+      '<div class="card-headline">dsm-firmenich is mentioned 1.6× more often</div>'+
+      '<div class="card-sub">Across <b>1,247 prompts</b> on ChatGPT, Perplexity, AIO, Gemini. The gap is content, not brand.</div>'+
+      '<div class="card-foot"><div class="mini-sov">'+
+        '<div class="msov"><div class="b-lbl">dsm-firmenich</div><div class="b-bar"><div style="width:100%"></div></div><div class="b-pct">23%</div></div>'+
+        '<div class="msov"><div class="b-lbl">IFF</div><div class="b-bar"><div style="width:86%"></div></div><div class="b-pct">20%</div></div>'+
+        '<div class="msov you"><div class="b-lbl">Givaudan</div><div class="b-bar"><div style="width:61%"></div></div><div class="b-pct">14%</div></div>'+
+      '</div></div>'+
+      '<div class="reveal"><b>São Paulo blind spot.</b> Zero appearances for fragrance jobs in São Paulo — and dsm-firmenich just announced a 40-role R&amp;D hub there.</div>'+
+    '</div>'+
+  '</div>';
+}
+function miniRing(val,color,label,gc,grade){
+  const off = 132 - (132*val/100);
+  return '<div class="mr"><div class="mr-c"><svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="21" fill="none" stroke="#F1F2F6" stroke-width="6"/>'+
+    '<circle cx="25" cy="25" r="21" fill="none" stroke="'+color+'" stroke-width="6" stroke-dasharray="132" stroke-dashoffset="'+off+'" stroke-linecap="round"/></svg>'+
+    '<div class="mr-v">'+val+'</div></div><div class="mr-l">'+label+'</div><div class="mr-g '+gc+'">'+grade+'</div></div>';
+}
+
+function holisticCarousel() {
+  const cards = DATA.carousel.map((c,i)=>(
+    '<div class="hcard" data-nav="#/recommendations/'+c.fix+'">'+
+      '<div class="htag '+c.tag+'">'+esc(c.tagLabel)+'</div>'+
+      '<h5>'+esc(c.title)+'</h5>'+
+      '<p>'+c.body+'</p>'+
+      '<div class="him"><div><div class="num '+c.numClass+'">'+esc(c.num)+'</div><div class="lbl">'+esc(c.lbl)+'</div></div></div>'+
+      '<div class="open-rec">Open in Recommendations <svg class="lc-sm" viewBox="0 0 24 24" style="width:11px;height:11px"><polyline points="9 18 15 12 9 6"/></svg></div>'+
+    '</div>'
+  )).join('');
+  const dots = DATA.carousel.map((_,i)=>'<div class="cdot'+(i===0?' on':'')+'" data-dot="'+i+'"></div>').join('');
+  return '<div class="holo">'+
+    '<div class="holo-head"><div class="ht"><div class="h-icon" style="width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.08);display:grid;place-items:center;border:1px solid rgba(255,255,255,.12)"><svg class="lc-sm" viewBox="0 0 24 24" style="color:#C4B5FD"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>'+
+      '<div><h3>Holistic plays · <span>refreshed weekly</span></h3><div class="meta">Generated from GSC + Pillar Doc v3 + GEO grid + competitor delta · click any to open it in Recommendations</div></div></div>'+
+      '<div class="holo-nav"><button class="cbtn" id="cPrev"><svg class="lc-sm" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button><button class="cbtn" id="cNext"><svg class="lc-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button></div></div>'+
+    '<div class="carousel"><div class="carousel-track" id="cTrack">'+cards+'</div></div>'+
+    '<div class="carousel-dots">'+dots+'</div>'+
+  '</div>';
+}
+
+/* ---------- VIEWS ---------- */
+function viewOverview() {
+  const s = DATA.snapshot;
+  return kpiStrip() + abstractionCards() +
+    '<div class="snapshot">'+
+      '<div class="snap-col s"><h4><svg class="lc-sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Strengths</h4><ul>'+s.strengths.map(x=>'<li><span class="dot"></span><span>'+x+'</span></li>').join('')+'</ul></div>'+
+      '<div class="snap-col g"><h4><svg class="lc-sm" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17"/></svg> Gaps</h4><ul>'+s.gaps.map(x=>'<li><span class="dot"></span><span>'+x+'</span></li>').join('')+'</ul></div>'+
+      '<div class="snap-col n"><h4><svg class="lc-sm" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Top priorities</h4><ul>'+s.next.map(x=>'<li><span class="dot"></span><button class="btn link" data-nav="'+x.nav+'">'+esc(x.label)+'</button></li>').join('')+'</ul></div>'+
+    '</div>' +
+    holisticCarousel();
+}
+
+function viewTraffic() {
+  return kpiStrip() +
+  '<div class="sec"><div class="sec-head"><div class="ic a"><svg class="lc" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div>'+
+    '<h3>Traffic — who\'s reaching the site</h3><div class="crumb"><span>GSC + GA4 + Server logs</span><span class="src">sync · 06:14 UTC</span></div></div>'+
+    '<div class="sec-body">'+
+    '<div class="t-grid">'+
+      '<div class="lane human"><div class="lane-head"><div class="lh-l"><span class="icn"><svg class="lc-sm" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>Human Traffic</div><div class="lh-r">GA4 + GSC · sessions</div></div>'+
+        trow('Impressions','78%','312<small>K</small>')+trow('Views','64%','42.1<small>K</small>')+trow('Clicks','48%','8.4<small>K</small>')+trow('Geography','56%','42<small> mkts</small>')+trow('Device','71%','68<small>% mobile</small>')+
+        '<div class="lane-split"><div class="lane-split-h">Human · landing distribution</div><div class="sb"><div class="sg jr" style="flex:41">JR · 41%</div><div class="sg lo" style="flex:28">Loc · 28%</div><div class="sg ev" style="flex:19">EVP · 19%</div><div class="sg bl" style="flex:12">Other · 12%</div></div></div></div>'+
+      '<div class="lane bot"><div class="lane-head"><div class="lh-l"><span class="icn"><svg class="lc-sm" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 16h0M16 16h0"/></svg></span>Bot Traffic</div><div class="lh-r">Server logs · AI scrapers</div></div>'+
+        btrow('Impressions','88%','1.8<small>M</small>','1.8M crawls/30d · GoogleBot 62% · OAI-SearchBot 18% · PerplexityBot 11%')+
+        btrow('Indexed Pages','34%','112<small>/328</small>','216 discovered not indexed · thin content + duplicates')+
+        btrow('AI Scraper Hits','52%','14.7<small>K</small>','OAI, Perplexity, Gemini, ClaudeBot · top: /careers, /flavorist, /argenteuil')+
+        btrow('Crawl Geography','62%','US · EU · APAC','US 51% · EU 32% · APAC 14% · LATAM 3% — LATAM gap mirrors AI gap')+
+        btrow('Bot User-Agents','41%','11<small> agents</small>','11 AI scraper UAs: ClaudeBot, GPTBot, OAI-SearchBot, PerplexityBot, Bytespider...')+
+        '<div class="lane-split"><div class="lane-split-h">Bot · crawl distribution</div><div class="sb"><div class="sg jr" style="flex:58">JR · 58%</div><div class="sg lo" style="flex:14">Loc · 14%</div><div class="sg ev" style="flex:11">EVP · 11%</div><div class="sg bl" style="flex:17">404/thin · 17%</div></div><div class="sleg"><span style="color:var(--red);font-weight:600">⚠ 17% of crawl budget wasted on soft-404s</span></div></div></div>'+
+    '</div>'+
+    // drill
+    '<div class="drill"><div class="drill-h"><h4><span class="pulse"></span> What crawlers + LLMs actually see</h4></div><div class="drill-grid">'+
+      '<div class="dcard"><h5>Ranking keyword cloud</h5><div class="kwc">'+
+        ['givaudan careers|s5','perfumer jobs|s4','flavorist apprenticeship|s4','sensory scientist|s3','vernier jobs|s4','argenteuil perfumery school|s3','fragrance industry careers|s2','food scientist switzerland|s3','application technologist|s2','supply chain singapore|s2','engage your senses|s3','sustainable flavor jobs|s2','são paulo fragrance|s1','cincinnati food science|s1','perfumery trainee|s1','taste and wellbeing|s1','flavor chemist|s1'].map(k=>{const[t,c]=k.split('|');return '<span class="kwx '+c+'">'+t+'</span>';}).join('')+
+      '</div></div>'+
+      '<div class="dcard"><h5>Top AI sources citing your site</h5><div class="ail">'+
+        ailrow('gpt','GPT','ChatGPT','1,247 cites · 42 prompts','mid','14.7%')+ailrow('per','P','Perplexity','418 cites · 27 prompts','high','22.4%')+ailrow('aio','AIO','Google AI Overview','312 appearances · 18 prompts','low','6.1%')+ailrow('gem','G','Gemini','198 cites · 14 prompts','mid','11.8%')+ailrow('g4j','G4J','Google for Jobs','71% role-page eligibility','mid','71%')+
+      '</div></div>'+
+      '<div class="dcard"><h5>Off-site sources · your story</h5><div class="srl">'+
+        srrow('#000','W','Wikipedia / Givaudan','8.2K','pos','Pos')+srrow('#0CAA41','G','Glassdoor reviews','1,842','pos','71%')+srrow('#FF4500','R','Reddit r/Perfumery','187','neu','Mixed')+srrow('#0077B5','in','LinkedIn posts','3.4K','pos','Pos')+srrow('#7C3AED','P','perfumerflavorist.com','42','pos','Pos')+srrow('#1DA1F2','X','X / industry','612','neu','Mixed')+
+      '</div></div>'+
+    '</div></div>'+
+    // GSC insights
+    '<div class="ins-band"><div class="ins-h"><h4><svg class="lc-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg> GSC + Pillar insights · ready to action</h4><div class="meta">v3 pillar · 24 candidates · top 3 shown</div></div><div class="ins-cards">'+
+      insCard('Rising · Content win','<b>/flavorist-careers/</b> got <b>+34% clicks</b>. Density on <code>food scientist switzerland</code> is 0.4% — push to 1.1%.','▲ +120 sessions/mo','')+
+      insCard('Rank breakthrough','<code>perfumer apprenticeship argenteuil</code> · +47% imps · pos 7.4. Internal link from /argenteuil/ pushes top-3.','▲ +280 clicks/mo (proj)','')+
+      insCard('Risk · mobile drop','Mobile CTR on <b>/jobs/</b> ▼<b>−18%</b> on iOS 17.4+. LCP regression: hero video <b>3.8s</b>.','▼ −410 clicks/mo at risk','risk')+
+    '</div></div>'+
+  '</div></div>';
+}
+function trow(l,w,n){ return '<div class="row"><div class="rl">'+l+'</div><div class="rb"><div style="width:'+w+'"></div></div><div class="rn">'+n+'</div></div>'; }
+function btrow(l,w,n,tip){ return '<div class="row"><div class="rl">'+l+'</div><div class="rb"><div style="width:'+w+'"></div></div><div class="rn">'+n+'</div><div class="rev-tip">'+esc(tip)+'</div></div>'; }
+function ailrow(c,badge,name,stat,rate,rv){ return '<div class="air"><div class="alogo '+c+'">'+badge+'</div><div class="am"><div class="am-n">'+name+'</div><div class="am-s">'+stat+'</div></div><div class="ar '+rate+'">'+rv+'</div></div>'; }
+function srrow(bg,b,name,mn,sent,sl){ return '<div class="srx"><div class="sfav" style="background:'+bg+'">'+b+'</div><div class="snm">'+name+'</div><div class="smn">'+mn+'</div><div class="ssn '+sent+'">'+sl+'</div></div>'; }
+function insCard(tag,copy,imp,risk){ return '<div class="ins"><div class="ins-tag">'+tag+'</div><div class="ins-copy">'+copy+'</div><div class="ins-foot"><span class="ins-imp '+risk+'">'+imp+'</span><button class="add-btn" data-add="1"><svg class="lc-sm" viewBox="0 0 24 24" style="width:11px;height:11px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Track</button></div></div>'; }
+
+function viewVisible(wave) {
+  const W = DATA.waves[wave];
+  const rings = ['wave1','wave2','wave3'].map(wk=>{
+    const w = DATA.waves[wk];
+    const meta = {
+      wave1:{pt:'Wave 1 · Technical',h:'Crawlable, not AI-ready',rm:'Sitemap + JobPosting ✓. <b style="color:var(--amber)">FAQ</b> + <b style="color:var(--amber)">Org schema</b> missing.',d:'▲ 6 pts · 4 of 9 fixes',dc:'up',col:'#16A34A',gc:'g-bp'},
+      wave2:{pt:'Wave 2 · Content',h:'Thin role + city coverage',rm:'EVP strong. Only <b>6 of 24</b> cities. No flavorist pillar.',d:'▼ vs IFF (78) · dsm-firm (71)',dc:'down',col:'#D97706',gc:'g-b'},
+      wave3:{pt:'Wave 3 · Off-Page',h:'Story told by others',rm:'Wikipedia + Glassdoor own narrative. No GBP. <b style="color:var(--amber)">Reddit mixed</b>.',d:'— Unmanaged surface',dc:'flat',col:'#DC2626',gc:'g-c'}
+    }[wk];
+    const off = 264 - (264*w.score/100);
+    const lbl = {wave1:'Tech',wave2:'Cont',wave3:'Off'}[wk];
+    return '<div class="rc'+(wk===wave?' on':'')+'" data-nav="#/visible/'+wk+'">'+
+      '<div class="ring"><svg viewBox="0 0 100 100" width="70" height="70"><circle cx="50" cy="50" r="42" fill="none" stroke="#F1F2F6" stroke-width="10"/><circle cx="50" cy="50" r="42" fill="none" stroke="'+meta.col+'" stroke-width="10" stroke-dasharray="264" stroke-dashoffset="'+off+'" stroke-linecap="round"/></svg><div class="ring-c">'+w.score+'<small>'+lbl+'</small></div></div>'+
+      '<div class="ring-meta"><div class="pt">'+meta.pt+'</div><h4>'+meta.h+'</h4><div class="rm">'+meta.rm+'</div><div class="delta '+meta.dc+'">'+meta.d+'</div></div></div>';
+  }).join('');
+
+  const waveTabs = ['wave1','wave2','wave3'].map(wk=>{
+    const w = DATA.waves[wk];
+    const nm = {wave1:'Wave 1 · Tech',wave2:'Wave 2 · Content',wave3:'Wave 3 · Off-Page'}[wk];
+    return '<button class="wave-tab'+(wk===wave?' on':'')+'" data-nav="#/visible/'+wk+'">'+nm+' <span class="gr '+w.gradeClass+'">'+w.grade+'</span></button>';
+  }).join('');
+
+  const tower = '<div class="tower"><div class="tg-row"><div class="tg-l">'+W.label+'</div><div class="tg-g '+W.gradeClass+'">'+W.grade+'</div></div>'+
+    '<div class="tstack">'+W.blocks.map(b=>'<div class="blk '+b.state+'"><div class="bi">'+(b.state==='done'?'✓':b.state==='prog'?'◐':'◯')+'</div><div>'+esc(b.label)+'</div><div class="bp">'+b.pct+'%</div></div>').join('')+'</div>'+
+    '<div class="tlegend"><span><span class="sw" style="background:#86EFAC"></span>Done</span><span><span class="sw" style="background:#FBBF24"></span>In progress</span><span><span class="sw" style="background:repeating-linear-gradient(45deg,#F8F9FC,#F8F9FC 3px,#F1F2F6 3px,#F1F2F6 6px)"></span>Empty</span></div></div>';
+
+  // issues for this wave (collapsible)
+  const issueRows = (W.issues||[]).map(id=>{
+    const it = DATA.issues[id];
+    return '<div class="irow" data-issue-row="'+id+'">'+
+      '<div class="irow-head" data-toggle-issue="'+id+'">'+
+        '<span class="sev '+it.severity+'">'+it.severity+'</span>'+
+        '<div class="irow-title">'+esc(it.title)+'<small>'+esc(it.pages?it.pages[0]:'')+'</small></div>'+
+        '<span class="icat">'+esc(it.category)+'</span>'+
+        '<span class="iimp '+it.impact+'">'+it.impact+' impact</span>'+
+        '<span class="iexpand"><svg class="lc-sm" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>'+
+      '</div>'+
+      '<div class="irow-body"><div class="irow-inner">'+
+        '<div class="see-grid"><div class="see user"><h6><svg class="lc-sm" viewBox="0 0 24 24" style="width:12px;height:12px"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg> What people see</h6><p>'+esc(it.userSees)+'</p></div>'+
+        '<div class="see ai"><h6><svg class="lc-sm" viewBox="0 0 24 24" style="width:12px;height:12px"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg> What AI sees</h6><p>'+esc(it.aiSees)+'</p></div></div>'+
+        '<div class="irow-actions"><button class="btn" data-nav="'+(it.type==='seo'?'#/visible/issue/':'#/geo/issue/')+id+'"><svg class="lc-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg> Inspect issue</button>'+
+        '<button class="add-btn" data-add="1"><svg class="lc-sm" viewBox="0 0 24 24" style="width:11px;height:11px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add to Recommendations</button></div>'+
+      '</div></div></div>';
+  }).join('');
+
+  const tasks = '<div class="issues-head"><h5><svg class="lc-sm" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg> '+W.tasks.length+' tasks · this wave</h5><div class="src-tag">/brazil-milestone.style</div></div>'+
+    '<div class="ilist">'+W.tasks.map(t=>(
+      '<div class="rec-top" style="border-bottom:1px solid var(--line-2)">'+
+        '<div class="tid" style="font-family:\'JetBrains Mono\',monospace;font-size:9.5px;font-weight:700;padding:3px 6px;border-radius:5px;background:var(--indigo-tint);color:var(--indigo-2)">'+t.id+'</div>'+
+        '<div class="rec-main"><div class="rt" style="font-size:12.5px">'+esc(t.title)+'</div><div class="rd">'+t.detail+'</div></div>'+
+        '<div class="rec-meta-pill">'+esc(t.owner)+'</div>'+
+        '<div class="te" style="font-size:10.5px;color:var(--ink-3);font-family:\'JetBrains Mono\',monospace">'+t.eta+'</div>'+
+        '<div class="rstatus '+(t.status==='prog'?'in_progress':t.status==='block'?'blocked':t.status==='done'?'done':'todo')+'">'+t.statusLabel+'</div>'+
+      '</div>'
+    )).join('')+'</div>';
+
+  return kpiStrip() +
+    '<div class="sec"><div class="sec-head"><div class="ic b"><svg class="lc" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>'+
+    '<h3>Visible-for — readable to humans and bots</h3><div class="crumb"><span>3 composite scores · 12 issues detected</span><span class="src">audit · weekly</span></div></div>'+
+    '<div class="sec-body">'+
+      '<div class="rings3">'+rings+'</div>'+
+      '<div class="tracker"><div class="tracker-h"><h4><svg class="lc-sm" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Activity Tracker · Joveo execution plan</h4><div class="wave-tabs">'+waveTabs+'</div></div>'+
+        '<div class="tbody">'+tower+
+          '<div class="wcontent">'+
+            '<div class="issues-head"><h5><svg class="lc-sm" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg> Issues detected · '+(W.issues||[]).length+' in this wave</h5><div class="src-tag">populated from scan · no separate scanner</div></div>'+
+            '<div class="ilist">'+issueRows+'</div>'+
+            tasks+
+          '</div>'+
+        '</div></div>'+
+    '</div></div>';
+}
+
+function viewGeo() {
+  const geoIssueRows = ['geo-01','geo-02','geo-05'].map(id=>{
+    const it = DATA.issues[id];
+    return '<div class="irow" data-issue-row="'+id+'">'+
+      '<div class="irow-head" data-toggle-issue="'+id+'">'+
+        '<span class="sev '+it.severity+'">'+it.severity+'</span>'+
+        '<div class="irow-title">'+esc(it.title)+'<small>'+esc(it.pages?it.pages[0]:'')+'</small></div>'+
+        '<span class="icat">'+esc(it.category)+'</span>'+
+        '<span class="iimp '+it.impact+'">'+it.impact+' impact</span>'+
+        '<span class="iexpand"><svg class="lc-sm" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>'+
+      '</div>'+
+      '<div class="irow-body"><div class="irow-inner">'+
+        '<div class="see-grid"><div class="see user"><h6>What people see</h6><p>'+esc(it.userSees)+'</p></div><div class="see ai"><h6>What AI sees</h6><p>'+esc(it.aiSees)+'</p></div></div>'+
+        '<div class="irow-actions"><button class="btn" data-nav="#/geo/issue/'+id+'"><svg class="lc-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg> Inspect issue</button><button class="add-btn" data-add="1"><svg class="lc-sm" viewBox="0 0 24 24" style="width:11px;height:11px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add to Recommendations</button></div>'+
+      '</div></div></div>';
+  }).join('');
+
+  return kpiStrip() +
+  '<div class="sec"><div class="sec-head"><div class="ic c"><svg class="lc" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>'+
+  '<h3>GEO — who answers when candidates ask AI</h3><div class="crumb"><span>1,247 prompts · 4 AI surfaces</span><span class="src">refresh · daily</span></div></div>'+
+  '<div class="sec-body"><div class="g-grid">'+
+    '<div>'+
+      '<div class="gcard"><h4><svg class="lc-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="14"/></svg> AI Share of Voice</h4><div class="sub">1,247 candidate-relevant prompts · who gets named</div><div class="sov-l">'+
+        sov('dsm-firmenich','92','23.1%','')+sov('IFF','79','19.8%','')+sov('Symrise','65','16.3%','')+sov('Givaudan','57','14.2%','you')+sov('Mane','35','8.7%','')+sov('Robertet','18','4.5%','')+
+      '</div><div class="callout"><b>Read this:</b> dsm-firmenich is mentioned <b>1.6×</b> as often as Givaudan. The gap is content, not brand.</div></div>'+
+      '<div class="gcard" style="margin-top:14px"><h4><svg class="lc-sm" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> Unbranded prompt visibility</h4><div class="sub">Rank position per AI surface · — = not mentioned</div>'+
+      '<div class="prm"><div class="pr head"><div class="c">Candidate prompt</div><div class="c">GPT</div><div class="c">Perp</div><div class="c">AIO</div><div class="c">Gem</div></div>'+
+        prow('"flavorist apprenticeship <em>Switzerland</em>"',['top|#1','top|#1','top|#2','top|#1'])+
+        prow('"best fragrance company to work at"',['mid|#3','top|#2','none|—','mid|#4'])+
+        prow('"perfumer career path"',['mid|#5','mid|#4','none|—','low|#6'])+
+        prow('"best companies for sensory scientists"',['none|—','low|#6','none|—','none|—'])+
+        prow('"fragrance jobs <em>São Paulo</em>"',['none|—','none|—','none|—','none|—'])+
+        prow('"sustainable flavor company careers"',['low|#7','none|—','none|—','low|#8'])+
+        prow('"is Givaudan a good place to work"',['top|#1','top|#1','top|#1','top|#1'])+
+      '</div><div style="margin-top:10px;font-size:10.5px;color:var(--ink-4);line-height:1.5"><b style="color:var(--amber)">⚠</b> Branded — perfect. Unbranded role + city — invisible. That\'s the research layer.</div></div>'+
+    '</div>'+
+    '<div>'+
+      '<div class="gcard"><h4><svg class="lc-sm" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Citation tracking</h4><div class="sub">Authority surfaces · by AI grounding frequency</div><div class="cites">'+
+        cite('#000','W','Wikipedia / Givaudan','main + locations + history','8.2K backlinks','GPT · Perp · AIO','own','Owned ✓')+
+        cite('#0CAA41','G','Glassdoor reviews','1,842 reviews · 4.0★','2.1K AI cites','"is X good employer"','par','Partial')+
+        cite('#FF4500','R','Reddit r/Perfumery','187 threads · 42 mention you','1.4K AI cites','71% neutral · 18% neg','mis','Risk')+
+        cite('#0077B5','in','LinkedIn posts','3.4K mentions / 90d','980 AI cites','strongest positive','own','Owned ✓')+
+        cite('#7C3AED','P','perfumerflavorist.com','trade pub · 42 articles','412 AI cites','industry trust','par','Partial')+
+        cite('#DC2626','!','GBP · Vernier HQ','unclaimed · no career link','—','blocks Knowledge Panel','mis','Missing')+
+      '</div></div>'+
+      '<div class="gcard" style="margin-top:14px"><h4><svg class="lc-sm" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> Brand mentions · non-owned · 30d</h4><div class="sub">What the world is saying — where to respond</div><div class="mns">'+
+        mention('#FF4500','R','reddit · r/Perfumery · 14d · 312↑','"Thinking about a career change. What\'s better long-term — <strong>Mane</strong> or trying to break into the big four (<strong>Givaudan</strong>, IFF, DSM-Firmenich, Symrise)?"','opp','Opportunity · authoritative answer → /careers/argenteuil/')+
+        mention('#0CAA41','G','glassdoor · 21d · verified · 5★','"Best decision of my career. The team in <strong>Vernier</strong> is genuinely world-class. Sustainability is taken seriously here."','win','Surface · testimonial on /life-at-givaudan/')+
+        mention('#7C3AED','P','perfumerflavorist.com · 9d','"<strong>dsm-firmenich</strong> announced a new São Paulo R&amp;D hub with 40 senior roles — placing it ahead of <strong>Givaudan</strong> in LATAM."','risk','Risk · competitor narrative · respond with São Paulo hub')+
+        mention('#1DA1F2','X','x.com · @perfumeschoolch · 6d · 84♥','"Givaudan\'s perfumery school in <strong>Argenteuil</strong> just announced their 2026–27 trainee intake. Only ~6 spots globally."','win','Amplify · strongest organic narrative')+
+      '</div></div>'+
+    '</div>'+
+  '</div>'+
+  // GEO issues collapsible
+  '<div class="tracker" style="margin-top:16px"><div class="issues-head"><h5><svg class="lc-sm" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg> GEO issues detected · 3</h5><div class="src-tag">prompt grid + citation scan</div></div><div class="ilist">'+geoIssueRows+'</div></div>'+
+  '</div></div>';
+}
+function sov(name,w,pct,you){ return '<div class="sovr '+you+'"><div class="bn">'+name+'</div><div class="sov-w"><div class="sov-b" style="width:'+w+'%">'+pct+'</div></div><div class="pc">'+pct+'</div></div>'; }
+function prow(q,arr){ return '<div class="pr"><div class="c q">'+q+'</div>'+arr.map(a=>{const[c,v]=a.split('|');return '<div class="c"><span class="rp '+c+'">'+v+'</span></div>';}).join('')+'</div>'; }
+function cite(bg,b,name,sub,m1,m2,st,sl){ return '<div class="cite"><div class="cfav" style="background:'+bg+'">'+b+'</div><div><div class="cn">'+name+'<small>'+sub+'</small></div></div><div class="cm"><b>'+m1+'</b><br>'+m2+'</div><div class="cst '+st+'">'+sl+'</div></div>'; }
+function mention(bg,b,src,txt,tag,tagl){ return '<div class="mn"><div class="mfv" style="background:'+bg+'">'+b+'</div><div class="mb"><div class="ms">'+src+'</div><div class="mt">'+txt+'</div><div class="mtag '+tag+'">'+tagl+'</div></div></div>'; }
+
+function viewIssue(id, module) {
+  const it = DATA.issues[id];
+  if (!it) return viewOverview();
+  const backHash = module==='geo' ? '#/geo' : '#/visible';
+  const fixes = (it.fixIds||[]).map(fid=>{
+    const f = DATA.fixes[fid]; if(!f) return '';
+    return '<button class="rec-item" style="text-align:left;border:0;cursor:pointer;width:100%" data-nav="#/recommendations/'+fid+'"><div class="rec-top">'+
+      '<div class="rec-ic" style="background:var(--indigo-tint);color:var(--indigo-2)"><svg class="lc" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2-2 2.5-2.5z"/></svg></div>'+
+      '<div class="rec-main"><div class="rt">'+esc(f.title)+'</div><div class="rd">'+f.steps.length+' steps · CMS-mapped</div></div>'+
+      '<div class="rec-impact"><div class="ri-n">'+esc(f.impact)+'</div><div class="ri-l">impact</div></div>'+
+      '<div class="rec-meta-pill">'+esc(f.effort)+'</div>'+
+      '<span class="iexpand"><svg class="lc-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>'+
+    '</div></button>';
+  }).join('');
+
+  const cwv = it.cwv ? '<div class="fix-side" style="margin-top:14px"><h5>Core Web Vitals · affected page</h5><div class="fix-meta">'+
+    it.cwv.map(c=>'<div class="fmeta-row"><span class="l">'+c.label+'</span><span class="v" style="color:'+(c.status==='pass'?'var(--green)':'var(--amber)')+'">'+c.value+' <small style="color:var(--ink-5);font-weight:500">/ '+c.target+'</small></span></div>').join('')+
+    '</div></div>' : '';
+
+  return pageHeader({back:backHash,backLabel: module==='geo'?'Back to GEO':'Back to Visible-for',
+    crumbs:[{label: module==='geo'?'GEO':'Visible-for',href:backHash},{label:'Issue'}],
+    title:it.title, lead:'<span class="sev '+it.severity+'" style="margin-right:8px">'+it.severity+'</span> <span class="icat">'+esc(it.category)+'</span> &nbsp; <span class="iimp '+it.impact+'">'+it.impact+' impact</span>'}) +
+    '<div class="fix-wrap">'+
+      '<div>'+
+        '<div class="see-grid"><div class="see user"><h6>What people see</h6><p>'+esc(it.userSees)+'</p></div><div class="see ai"><h6>What AI engines see</h6><p>'+esc(it.aiSees)+'</p></div></div>'+
+        '<div class="sec" style="margin-top:6px"><div class="sec-head" style="padding:14px 18px"><h3 style="font-size:14px">Linked fixes</h3><div class="crumb">click a fix for step-by-step CMS instructions</div></div><div class="sec-body" style="padding:14px 16px"><div class="rec-list">'+fixes+'</div></div></div>'+
+      '</div>'+
+      '<div class="fix-side"><h5>Affected surfaces</h5><div class="fix-meta">'+
+        (it.pages||[]).map(p=>'<div class="fmeta-row"><span class="l" style="font-family:\'JetBrains Mono\',monospace;font-size:11px">'+esc(p)+'</span></div>').join('')+
+        '</div>'+
+        '<div style="margin-top:14px"><button class="add-btn" style="width:100%;justify-content:center;padding:9px" data-add="1"><svg class="lc-sm" viewBox="0 0 24 24" style="width:13px;height:13px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add to Recommendations</button></div>'+
+        cwv+
+      '</div>'+
+    '</div>';
+}
+
+function viewRecommendations(activeKind) {
+  // count by kind
+  const counts = {}; Object.values(DATA.fixes).forEach(f=>{counts[f.kind]=(counts[f.kind]||0)+1;});
+  const kindCards = Object.keys(DATA.recKinds).map(k=>{
+    const rk = DATA.recKinds[k];
+    return '<div class="rec-kind'+(activeKind===k?' on':'')+'" data-kind="'+k+'"><div class="rk-ic '+k+'">'+rk.icon+'</div><div class="rk-n">'+rk.name+'</div><div class="rk-c">'+(counts[k]||0)+'</div><div class="rk-s">'+rk.sub+'</div></div>';
+  }).join('');
+
+  const items = Object.keys(DATA.fixes).filter(fid=> !activeKind || DATA.fixes[fid].kind===activeKind).map(fid=>{
+    const f = DATA.fixes[fid];
+    const kc = {quick:'rk-ic quick',season:'rk-ic season',comp:'rk-ic comp',evp:'rk-ic evp',tech:'rk-ic tech'}[f.kind];
+    return '<button class="rec-item" id="rec-'+fid+'" style="text-align:left;border:1px solid var(--line-2);cursor:pointer;width:100%" data-nav="#/recommendations/'+fid+'"><div class="rec-top">'+
+      '<div class="rec-ic '+kc+'">'+DATA.recKinds[f.kind].icon+'</div>'+
+      '<div class="rec-main"><div class="rt">'+esc(f.title)+'</div><div class="rd">'+esc(DATA.recKinds[f.kind].name)+' · '+f.steps.length+' steps · owner: '+esc(f.owner)+'</div></div>'+
+      '<div class="rec-impact"><div class="ri-n">'+esc(f.impact)+'</div><div class="ri-l">expected impact</div></div>'+
+      '<div class="rec-meta-pill">'+esc(f.effort)+'</div>'+
+      '<div class="rstatus '+f.status+'">'+f.status.replace('_',' ')+'</div>'+
+    '</div></button>';
+  }).join('');
+
+  return '<div class="page-header"><h2>Recommendations</h2><p class="page-lead">Every detected problem, abstracted by kind and ranked by impact. Filter by category, then open any play for step-by-step CMS instructions. The weekly carousel on Overview links straight here.</p></div>'+
+    '<div class="rec-summary">'+kindCards+'</div>'+
+    (activeKind ? '<div style="margin-bottom:12px"><button class="btn ghost" data-kind="">← All recommendations</button></div>' : '')+
+    '<div class="rec-list">'+items+'</div>';
+}
+
+function viewRecDetail(fixId) {
+  const f = DATA.fixes[fixId];
+  if (!f) return viewRecommendations();
+  const steps = f.steps.map((s,i)=>'<div class="fstep"><div class="fn">'+(i+1)+'</div><div><div class="ft">'+esc(s.text)+'</div>'+(s.cms?'<div class="fc">'+esc(s.cms)+'</div>':'')+'</div></div>').join('');
+  // related issues
+  const related = Object.keys(DATA.issues).filter(id=>(DATA.issues[id].fixIds||[]).includes(fixId));
+  const relHtml = related.map(id=>{const it=DATA.issues[id];return '<div class="fmeta-row"><button class="btn link" data-nav="'+(it.type==='seo'?'#/visible/issue/':'#/geo/issue/')+id+'">'+esc(it.title)+'</button></div>';}).join('');
+  return pageHeader({back:'#/recommendations',backLabel:'Back to Recommendations',crumbs:[{label:'Recommendations',href:'#/recommendations'},{label:DATA.recKinds[f.kind].name}],title:f.title,lead:'Step-by-step fix with the exact CMS path for each action.'}) +
+    '<div class="fix-wrap">'+
+      '<div class="fix-steps">'+steps+'</div>'+
+      '<div class="fix-side"><h5>Fix summary</h5><div class="fix-meta">'+
+        '<div class="fmeta-row"><span class="l">Category</span><span class="v">'+esc(DATA.recKinds[f.kind].name)+'</span></div>'+
+        '<div class="fmeta-row"><span class="l">Expected impact</span><span class="v" style="color:var(--green)">'+esc(f.impact)+'</span></div>'+
+        '<div class="fmeta-row"><span class="l">Effort</span><span class="v">'+esc(f.effort)+'</span></div>'+
+        '<div class="fmeta-row"><span class="l">Owner</span><span class="v">'+esc(f.owner)+'</span></div>'+
+        '<div class="fmeta-row"><span class="l">Status</span><span class="rstatus '+f.status+'">'+f.status.replace('_',' ')+'</span></div>'+
+        '</div>'+
+        (relHtml?'<h5 style="margin-top:16px">Resolves issues</h5><div class="fix-meta">'+relHtml+'</div>':'')+
+        '<div style="margin-top:16px"><button class="add-btn" style="width:100%;justify-content:center;padding:9px" data-add="1"><svg class="lc-sm" viewBox="0 0 24 24" style="width:13px;height:13px"><polyline points="20 6 9 17 4 12"/></svg> Mark as scheduled</button></div>'+
+      '</div>'+
+    '</div>';
+}
+
+function pageHeader(opts){
+  const crumbs = (opts.crumbs||[]).map((c,i)=>{const sep=i?' <span style="color:var(--ink-5)">/</span> ':'';return sep+(c.href?'<a data-nav="'+c.href+'">'+esc(c.label)+'</a>':'<span>'+esc(c.label)+'</span>');}).join('');
+  const back = opts.back?'<button class="btn-back" data-nav="'+opts.back+'"><svg class="lc-sm" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> '+esc(opts.backLabel||'Back')+'</button>':'';
+  return '<div class="page-header"><div class="back-row">'+back+(crumbs?'<nav class="crumbs">'+crumbs+'</nav>':'')+'</div>'+(opts.title?'<h2>'+esc(opts.title)+'</h2>':'')+(opts.lead?'<p class="page-lead">'+opts.lead+'</p>':'')+'</div>';
+}
+
+/* ---------- RENDER ---------- */
+function renderNav(active) {
+  document.getElementById('mnav').innerHTML = TABS.map(t=>(
+    '<a class="mtab'+(t.id===active?' on':'')+(t.id==='recommendations'?' warn-dot':'')+'" data-nav="'+t.hash+'">'+
+      '<span class="ic">'+t.icon+'</span>'+esc(t.label)+(t.cnt?'<span class="cnt">'+t.cnt+'</span>':'')+'</a>'
+  )).join('');
+}
+
+let carouselIndex = 0;
+function render() {
+  const r = parseRoute();
+  renderNav(r.module);
+  const view = document.getElementById('view');
+  let html='';
+  if (r.name==='overview') html = viewOverview();
+  else if (r.name==='traffic') html = viewTraffic();
+  else if (r.name==='visible') html = viewVisible(r.wave||'wave1');
+  else if (r.name==='geo') html = viewGeo();
+  else if (r.name==='issue') html = viewIssue(r.id, r.module);
+  else if (r.name==='recommendations') html = viewRecommendations(null);
+  else if (r.name==='rec-detail') html = viewRecDetail(r.id);
+  else html = viewOverview();
+  view.innerHTML = html;
+  view.scrollIntoView({block:'start'});
+  window.scrollTo({top:0,behavior:'instant'});
+  postRender(r);
+}
+
+function postRender(r) {
+  // count-up
+  document.querySelectorAll('.kpi-num[data-count]').forEach(el=>{
+    const to = parseFloat(el.dataset.count); const suf = el.dataset.suffix||'';
+    if (isNaN(to)) return;
+    const isFloat = String(to).includes('.'); const dur=850; const start=performance.now();
+    function tick(now){const t=Math.min(1,(now-start)/dur);const e=1-Math.pow(1-t,3);const v=to*e;el.textContent=(isFloat?v.toFixed(1):Math.round(v));if(t<1)requestAnimationFrame(tick);}
+    requestAnimationFrame(tick);
+  });
+  // carousel
+  if (document.getElementById('cTrack')) initCarousel();
+  // recommendation deep-link flash
+  if (r.name==='rec-detail') { /* handled in detail view */ }
+}
+
+/* carousel logic */
+function initCarousel() {
+  carouselIndex = 0;
+  const track = document.getElementById('cTrack');
+  const dots = document.querySelectorAll('.cdot');
+  const total = DATA.carousel.length;
+  const perView = window.innerWidth <= 1140 ? 2 : 4;
+  const maxIndex = Math.max(0, total - perView);
+  function go(i){
+    carouselIndex = Math.max(0, Math.min(i, maxIndex));
+    const card = track.children[0];
+    const gap = 14;
+    const step = card.getBoundingClientRect().width + gap;
+    track.style.transform = 'translateX(-'+(carouselIndex*step)+'px)';
+    dots.forEach((d,di)=>d.classList.toggle('on', di===carouselIndex));
+  }
+  const prev=document.getElementById('cPrev'), next=document.getElementById('cNext');
+  if(prev) prev.onclick=()=>go(carouselIndex-1);
+  if(next) next.onclick=()=>go(carouselIndex+1);
+  dots.forEach((d,di)=>d.onclick=()=>go(di));
+  go(0);
+}
+
+/* ---------- GLOBAL CLICK DELEGATION ---------- */
+document.addEventListener('click', e=>{
+  // navigation
+  const nav = e.target.closest('[data-nav]');
+  if (nav) { e.preventDefault(); navigate(nav.getAttribute('data-nav')); return; }
+  // collapsible issue rows
+  const tog = e.target.closest('[data-toggle-issue]');
+  if (tog) { tog.closest('.irow').classList.toggle('open'); return; }
+  // recommendation kind filter
+  const kind = e.target.closest('[data-kind]');
+  if (kind) { const k = kind.getAttribute('data-kind'); document.getElementById('view').innerHTML = viewRecommendations(k||null); postRender({name:'recommendations'}); return; }
+  // add-to-tracker buttons
+  const add = e.target.closest('[data-add]');
+  if (add && !add.classList.contains('added')) {
+    add.innerHTML = '<svg class="lc-sm" viewBox="0 0 24 24" style="width:11px;height:11px"><polyline points="20 6 9 17 4 12"/></svg> Added';
+    add.classList.add('added'); return;
+  }
+});
+
+/* boot */
+render();
+</script>
+</body>
+</html>
