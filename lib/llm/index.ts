@@ -1,12 +1,14 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { z } from "zod";
 
-const provider = process.env.LLM_PROVIDER ?? "gemini";
-
 const MODELS = {
+  // gemini-2.0-flash: stable, production-ready, generous free-tier limits
   fast:  process.env.LLM_MODEL_FAST  ?? "gemini-2.0-flash",
-  deep:  process.env.LLM_MODEL_DEEP  ?? "gemini-2.5-pro",
-  cheap: process.env.LLM_MODEL_CHEAP ?? "gemini-2.0-flash",
+  // gemini-1.5-pro: reliable deep-reasoning model; safe on free tier
+  // Upgrade to gemini-2.5-pro once billing is enabled
+  deep:  process.env.LLM_MODEL_DEEP  ?? "gemini-1.5-pro",
+  // gemini-2.0-flash-lite: ~25% cheaper than flash for high-volume calls (sentiment)
+  cheap: process.env.LLM_MODEL_CHEAP ?? "gemini-2.0-flash-lite",
 } as const;
 
 type Tier = keyof typeof MODELS;
@@ -24,6 +26,7 @@ export async function callLLM<T>(
 ): Promise<T> {
   const { tier = "fast", systemPrompt, maxRetries = 1 } = opts;
   const modelId = MODELS[tier];
+  const provider = process.env.LLM_PROVIDER ?? "gemini";
 
   if (provider === "gemini") {
     return callGemini(userPrompt, schema, { systemPrompt, modelId, maxRetries });
