@@ -225,6 +225,22 @@ export interface Database {
         Update: { count?: number; conversion_value?: number | null };
         Relationships: [];
       };
+      waves: {
+        Row: {
+          id: string; project_id: string;
+          wave_number: 1 | 2 | 3;
+          grade: string | null;
+          blocks: Json | null;
+        };
+        Insert: {
+          id?: string; project_id: string;
+          wave_number: 1 | 2 | 3;
+          grade?: string | null;
+          blocks?: Json | null;
+        };
+        Update: { grade?: string | null; blocks?: Json | null };
+        Relationships: [];
+      };
       insights_band: {
         Row: {
           id: string; project_id: string;
