@@ -1,7 +1,8 @@
 "use client";
 
-import { CheckCircle2, AlertCircle, Clock, Link2 } from "lucide-react";
+import { CheckCircle2, AlertCircle, Clock, Link2, RefreshCw } from "lucide-react";
 import { formatDate } from "@/lib/utils/dates";
+import { useState, useTransition } from "react";
 
 export type ConnectionStatus = "not_connected" | "connecting" | "connected" | "error" | "expired";
 
@@ -15,87 +16,120 @@ interface ConnectionCardProps {
   lastError?:     string | null;
   projectId:      string;
   connectHref:    string;
+  onSync?:        (projectId: string) => Promise<{ ok: boolean; error?: string; queries?: number; pages?: number }>;
 }
 
 const STATUS_CONFIG = {
-  not_connected: { icon: Link2,          color: "var(--ink-5)", label: "Not connected" },
-  connecting:    { icon: Clock,          color: "var(--amber)", label: "Connecting…" },
-  connected:     { icon: CheckCircle2,   color: "var(--green)", label: "Connected" },
-  error:         { icon: AlertCircle,    color: "var(--red)",   label: "Error" },
-  expired:       { icon: AlertCircle,    color: "var(--amber)", label: "Token expired" },
+  not_connected: { icon: Link2,        color: "var(--ink-5)", label: "Not connected" },
+  connecting:    { icon: Clock,        color: "var(--amber)", label: "Connecting…" },
+  connected:     { icon: CheckCircle2, color: "var(--green)", label: "Connected" },
+  error:         { icon: AlertCircle,  color: "var(--red)",   label: "Error" },
+  expired:       { icon: AlertCircle,  color: "var(--amber)", label: "Token expired" },
 } as const;
 
 export function ConnectionCard({
-  provider,
-  label,
-  description,
-  status,
-  propertyId,
-  lastSyncedAt,
-  lastError,
-  projectId,
-  connectHref,
+  provider, label, description, status, propertyId, lastSyncedAt,
+  lastError, projectId, connectHref, onSync,
 }: ConnectionCardProps) {
-  const cfg  = STATUS_CONFIG[status];
-  const Icon = cfg.icon;
+  const cfg         = STATUS_CONFIG[status];
+  const Icon        = cfg.icon;
   const isConnected = status === "connected";
   const needsReauth = status === "expired" || status === "error";
 
+  const [syncMsg, setSyncMsg]         = useState<string | null>(null);
+  const [syncError, setSyncError]     = useState<string | null>(null);
+  const [isPending, startTransition]  = useTransition();
+
+  function handleSync() {
+    if (!onSync) return;
+    setSyncMsg(null);
+    setSyncError(null);
+    startTransition(async () => {
+      const res = await onSync(projectId);
+      if (res.ok) {
+        setSyncMsg(`Synced — ${res.queries} queries, ${res.pages} pages`);
+      } else {
+        setSyncError(res.error ?? "Sync failed");
+      }
+    });
+  }
+
   return (
     <div
-      className="rounded-[var(--r-xl)] p-5"
       style={{
-        background:  "var(--surface)",
-        boxShadow:   "var(--sh-1)",
-        border:      isConnected ? "1px solid var(--green-tint)" : "1px solid var(--line)",
+        background: "var(--surface)",
+        boxShadow:  "var(--sh-1)",
+        border:     isConnected ? "1px solid var(--green-tint)" : "1px solid var(--line)",
+        borderRadius: "var(--r-xl)",
+        padding: 20,
       }}
       data-testid={`connection-card-${provider}`}
     >
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-sm font-semibold" style={{ color: "var(--ink)" }}>{label}</span>
-            <div className="flex items-center gap-1">
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16 }}>
+        <div style={{ flex: 1 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+            <span style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)" }}>{label}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
               <Icon size={12} style={{ color: cfg.color }} />
-              <span className="text-xs" style={{ color: cfg.color }} data-testid={`${provider}-status`}>
-                {cfg.label}
-              </span>
+              <span style={{ fontSize: 12, color: cfg.color }} data-testid={`${provider}-status`}>{cfg.label}</span>
             </div>
           </div>
-          <p className="text-xs" style={{ color: "var(--ink-4)" }}>{description}</p>
+          <p style={{ fontSize: 12, color: "var(--ink-4)", margin: 0 }}>{description}</p>
 
           {propertyId && (
-            <p className="text-xs mt-1 font-mono" style={{ color: "var(--ink-3)" }}>
-              {propertyId}
-            </p>
+            <p style={{ fontSize: 11, marginTop: 4, fontFamily: "var(--font-jetbrains, monospace)", color: "var(--ink-3)" }}>{propertyId}</p>
           )}
           {lastSyncedAt && (
-            <p className="text-xs mt-1" style={{ color: "var(--ink-5)" }} data-testid={`${provider}-last-sync`}>
+            <p style={{ fontSize: 11, marginTop: 4, color: "var(--ink-5)" }} data-testid={`${provider}-last-sync`}>
               Last synced: {formatDate(lastSyncedAt)}
             </p>
           )}
-          {lastError && (
-            <p
-              className="text-xs mt-1 px-2 py-1 rounded-[var(--r-sm)]"
-              style={{ color: "var(--red)", background: "var(--red-tint)" }}
-            >
-              {lastError}
-            </p>
+          {(lastError && !syncError) && (
+            <p style={{ fontSize: 11, marginTop: 4, padding: "4px 8px", borderRadius: 6, color: "var(--red)", background: "var(--red-tint)" }}>{lastError}</p>
+          )}
+          {syncError && (
+            <p style={{ fontSize: 11, marginTop: 4, padding: "4px 8px", borderRadius: 6, color: "var(--red)", background: "var(--red-tint)" }}>{syncError}</p>
+          )}
+          {syncMsg && (
+            <p style={{ fontSize: 11, marginTop: 4, padding: "4px 8px", borderRadius: 6, color: "var(--green)", background: "var(--green-tint)" }}>{syncMsg}</p>
           )}
         </div>
 
-        <a
-          href={`${connectHref}?project_id=${projectId}`}
-          className="shrink-0 text-xs font-semibold px-3 py-1.5 rounded-[var(--r-md)] transition-opacity hover:opacity-80"
-          style={{
-            background: isConnected ? "var(--bg-2)" : "linear-gradient(135deg, var(--indigo), var(--purple))",
-            color:      isConnected ? "var(--ink-3)" : "white",
-            border:     isConnected ? "1px solid var(--line)" : "none",
-          }}
-        >
-          {isConnected ? "Reconnect" : needsReauth ? "Re-authenticate" : `Connect ${label}`}
-        </a>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+          {isConnected && onSync && (
+            <button
+              onClick={handleSync}
+              disabled={isPending}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 6,
+                padding: "6px 11px", fontSize: 12, fontWeight: 500,
+                background: "var(--surface)", border: "1px solid var(--line)",
+                borderRadius: 9, color: "var(--ink-2)", cursor: isPending ? "not-allowed" : "pointer",
+                opacity: isPending ? 0.6 : 1,
+              }}
+            >
+              <RefreshCw size={12} style={{ animation: isPending ? "spin 1s linear infinite" : "none" }} />
+              {isPending ? "Syncing…" : "Sync Now"}
+            </button>
+          )}
+          <a
+            href={`${connectHref}?project_id=${projectId}`}
+            style={{
+              display: "inline-flex", alignItems: "center",
+              padding: "6px 11px", fontSize: 12, fontWeight: 600,
+              background:    isConnected ? "var(--bg-2)" : "linear-gradient(135deg, var(--indigo), var(--purple))",
+              color:         isConnected ? "var(--ink-3)" : "white",
+              border:        isConnected ? "1px solid var(--line)" : "none",
+              borderRadius:  9,
+              textDecoration: "none",
+            }}
+          >
+            {isConnected ? "Reconnect" : needsReauth ? "Re-authenticate" : `Connect ${label}`}
+          </a>
+        </div>
       </div>
+
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
 }

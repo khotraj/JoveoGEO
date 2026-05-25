@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/db/server";
 import { ConnectionCard } from "@/components/connections/ConnectionCard";
 import type { ConnectionStatus } from "@/components/connections/ConnectionCard";
+import { triggerGscSync } from "@/app/actions/sync";
 
 const BANFIELD_PROJECT_ID = "a0000000-0000-0000-0000-000000000001";
 
@@ -56,6 +57,7 @@ export default async function ConnectionsPage() {
           lastError={gscConn?.last_error ?? null}
           projectId={BANFIELD_PROJECT_ID}
           connectHref="/api/connect/gsc"
+          onSync={triggerGscSync}
         />
         <ConnectionCard
           provider="ga4"

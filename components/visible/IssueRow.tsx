@@ -1,3 +1,5 @@
+"use client";
+
 interface IssueRowProps {
   id: string;
   title: string;

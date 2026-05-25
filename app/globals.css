@@ -117,3 +117,24 @@ body {
   transform: translateY(-2px);
   box-shadow: var(--sh-2);
 }
+
+/* Overview abstraction cards */
+.abs-card {
+  transition: transform .35s var(--spring), box-shadow .25s var(--ease), border-color .2s var(--ease);
+  text-decoration: none;
+  display: block;
+}
+.abs-card:hover {
+  transform: translateY(-3px) scale(1.005);
+  box-shadow: var(--sh-3);
+  border-color: #C7CFFF !important;
+}
+.abs-card .card-chev {
+  transition: all .25s var(--spring);
+}
+.abs-card:hover .card-chev {
+  background: var(--ink) !important;
+  color: #fff !important;
+  border-color: var(--ink) !important;
+  transform: translateX(2px);
+}
